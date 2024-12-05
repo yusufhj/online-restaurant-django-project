@@ -14,9 +14,15 @@
         </div>
         <nav>
             <ul>
-                <li>Profile</li>
-                <li>Login</li>
-                <li>Sign up</li>
+                {% comment %} {% if user.is_authenticated %} {% endcomment %}
+                    <li>Profile</li>
+                    <li>Login</li>
+                    <li>Logout</li>
+                {% comment %} {% else %} {% endcomment %}
+                    {% comment %} <li>Profile</li>
+                    <li>Login</li>
+                    <li>Sign up</li> {% endcomment %}
+                {% comment %} {% endif %} {% endcomment %}
             </ul>
         </nav>
     </header>

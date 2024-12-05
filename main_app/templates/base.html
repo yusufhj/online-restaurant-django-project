@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Restaurant</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"> {% comment %} Bulma CSS framework import {% endcomment %}
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="/">
+                <img src="https://cdn-icons-png.flaticon.com/512/3448/3448609.png" alt="Logo"> {% comment %} Placeholder image {% endcomment %}
+              </a>
+            </div>
+          
+            <div class="navbar-menu">
+              <div class="navbar-start">
+                <a class="navbar-item">
+                    Home
+                </a>
+            </div>
+            
+            <div class="navbar-end">
+                {% comment %} IF USER IS LOGGED IN {% endcomment %}
+                {% comment %} {% if user.is_authenticated %} {% endcomment %}
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                          Profile
+                        </a>
+                        
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item">
+                                Orders
+                            </a>
+                            <a class="navbar-item">
+                            Cart
+                          </a>
+                          <hr class="navbar-divider">
+                          <a class="navbar-item">
+                              Logout
+                            </a>
+                        </div>
+                    </div>
+                {% comment %} IF USER IS NOT LOGGED IN {% endcomment %}
+                {% comment %} {% else %} {% endcomment %}
+                    <div class="navbar-item">
+                        <div class="buttons">
+                        <a class="button is-primary">
+                          <strong>Sign up</strong>
+                        </a>
+                        <a class="button is-light">
+                          Log in
+                        </a>
+                    </div>
+                {% comment %} {% endif %} {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

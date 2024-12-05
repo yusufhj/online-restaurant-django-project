@@ -192,15 +192,6 @@ Function updateProfile(userId, updatedDetails):
 ### Order History and Cart Page
 ![Order History and Cart Page](assets/mockups/customPage.jpg)
 
-### Menu Page
-![Menu Page](./assets/MenuPage.jpg)
-
-### Profile Page
-![Profile Page](./assets/MenuPage.jpg)
-
-### Cart and Orders Page
-![Cart and Orders Page](./assets/MenuPage.jpg)
-
 ## Data Models
 
 

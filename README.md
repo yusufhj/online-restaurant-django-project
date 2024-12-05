@@ -4,6 +4,9 @@
 
 ## Introduction
 
+The Restaurant Management System is a comprehensive web application designed to streamline restaurant operations and enhance the customer experience. This system enables restaurant administrators to efficiently manage menu items, categorize them, and oversee user orders. Customers can browse the menu, add items to their cart, place orders, and manage their profiles with ease.
+
+The application is built using Django, providing a robust and scalable framework for backend operations. It ensures an intuitive interface for both administrators and users, making restaurant management and ordering simple and user-friendly.
 ## ERD
 
 ## User Stories

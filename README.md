@@ -40,6 +40,145 @@
 - As a user, I can view my account details, such as name, email, and phone number, to ensure my profile information is accurate.
 
 ## Pseudo Code
+### Admin Functions
+#### Create a new menu item:
+``` 
+Function addMenuItem(name, description, price, category, image, available):
+    Create new MenuItem object with the provided details
+    Save MenuItem to the database
+    Return success message
+```
+#### Edit Menu Item
+```
+Function editMenuItem(menuItemId, updatedDetails):
+    Fetch MenuItem object by menuItemId
+    If MenuItem exists:
+        Update fields with updatedDetails
+        Save changes to the database
+        Return success message
+    Else:
+        Return error message
+```
+#### Delete Menu Item
+```
+Function deleteMenuItem(menuItemId):
+    Fetch MenuItem object by menuItemId
+    If MenuItem exists:
+        Delete MenuItem from the database
+        Return success message
+    Else:
+        Return error message
+```
+#### View Orders
+```
+Function viewOrders():
+    Fetch all Order objects from the database
+    For each order:
+        Display order details (user, items, status, total price)
+    Return orders list
+```
+#### Update Order Status
+```
+Function updateOrderStatus(orderId, newStatus):
+    Fetch Order object by orderId
+    If Order exists:
+        Update status to newStatus
+        Save changes to the database
+        Return success message
+    Else:
+        Return error message
+```
+#### Update Restaurant Profile
+```
+Function updateRestaurantProfile(name, address):
+    Fetch Restaurant object
+    If Restaurant exists:
+        Update name and address
+        Save changes to the database
+        Return success message
+    Else:
+        Return error message
+```
+
+### User Functions
+#### View Menu
+```
+Function viewMenu():
+    Fetch all MenuItem objects categorized by their category
+    Return categorized menu list
+```
+#### Add Item to Cart
+```
+Function addToCart(userId, menuItemId, quantity):
+    Fetch MenuItem by menuItemId
+    If MenuItem is available:
+        Create or update CartItem object for the user
+        Update quantity in the CartItem
+        Return success message
+    Else:
+        Return error message
+```
+#### View Cart
+```
+Function viewCart(userId):
+    Fetch all CartItem objects for the user
+    Calculate total price
+    Return cart items and total price
+```
+#### Edit Cart Item
+```
+Function editCartItem(userId, cartItemId, newQuantity):
+    Fetch CartItem by cartItemId for the user
+    If CartItem exists:
+        If newQuantity > 0:
+            Update quantity
+            Save changes to the database
+            Return success message
+        Else:
+            Delete CartItem
+            Return success message
+    Else:
+        Return error message
+```
+#### Place Order
+```
+Function placeOrder(userId):
+    Fetch all CartItem objects for the user
+    If Cart is not empty:
+        Create new Order object
+        Add CartItems to the Order as OrderItems
+        Calculate and update total price
+        Save Order to the database
+        Clear Cart for the user
+        Return success message
+    Else:
+        Return error message
+```
+#### View Order History
+```
+Function viewOrderHistory(userId):
+    Fetch all Order objects for the user
+    Return list of past orders with details
+```
+
+### Profile Management
+#### View Profile
+```
+Function viewProfile(userId):
+    Fetch User object by userId
+    Return user details
+```
+#### Update Profile
+```
+Function updateProfile(userId, updatedDetails):
+    Fetch User object by userId
+    If User exists:
+        Update fields with updatedDetails
+        Save changes to the database
+        Return success message
+    Else:
+        Return error message
+```
 
 ## Mockups
 ### Menu Page

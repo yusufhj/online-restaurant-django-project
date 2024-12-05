@@ -4,20 +4,21 @@
 
 ## Introduction
 
-The Restaurant Management System is a comprehensive web application designed to streamline restaurant operations and enhance the customer experience. This system enables restaurant administrators to efficiently manage menu items, categorize them, and oversee user orders. Customers can browse the menu, add items to their cart, place orders, and manage their profiles with ease.
+The Restaurant Management System is a comprehensive web application designed to streamline restaurant operations and enhance the customer experience. This system enables restaurant administrators to efficiently manage menu menu, categorize them, and oversee user orders. Customers can browse the menu, add menu to their cart, place orders, and manage their profiles with ease.
 
 The application is built using Django, providing a robust and scalable framework for backend operations. It ensures an intuitive interface for both administrators and users, making restaurant management and ordering simple and user-friendly.
 ## ERD
+![ERD](assets/ERD/Database%20ER%20diagram%20(crow's%20foot).png)
 
 ## User Stories
 ### Admin User Stories
 #### Menu Management
-- As an admin, I can add menu items to the system by specifying the name, description, price, category, and image so that they appear in the restaurant's menu.
-- As an admin, I can edit menu items to update their details, such as price or availability, ensuring that the menu remains up-to-date.
-- As an admin, I can delete menu items that are no longer available or relevant to keep the menu clean and accurate.
-- As an admin, I can create and manage categories for menu items to organize the menu (e.g., Appetizers, Main Course, Desserts).
+- As an admin, I can add menu menu to the system by specifying the name, description, price, category, and image so that they appear in the restaurant's menu.
+- As an admin, I can edit menu menu to update their details, such as price or availability, ensuring that the menu remains up-to-date.
+- As an admin, I can delete menu menu that are no longer available or relevant to keep the menu clean and accurate.
+- As an admin, I can create and manage categories for menu menu to organize the menu (e.g., Appetizers, Main Course, Desserts).
 #### Order Management
-- As an admin, I can view all orders placed by users in the restaurant, including details like ordered items, quantities, and the order status, to manage the order fulfillment process.
+- As an admin, I can view all orders placed by users in the restaurant, including details like ordered menu, quantities, and the order status, to manage the order fulfillment process.
 - As an admin, I can update the status of an order (e.g., Preparing, Ready, Delivered) to keep users informed of their order progress.
 #### Restaurant Profile Management
 - As an admin, I can view and edit my restaurant’s profile, including the restaurant name and address, to ensure the information is accurate.
@@ -28,17 +29,17 @@ The application is built using Django, providing a robust and scalable framework
 
 ### User Stories
 #### Menu Browsing
-- As a user, I can view the restaurant’s menu, organized by categories, so that I can easily find the items I want to order.
+- As a user, I can view the restaurant’s menu, organized by categories, so that I can easily find the menu I want to order.
 #### Cart Management
-- As a user, I can add menu items to my cart by specifying the quantity, so I can prepare my order.
-- As a user, I can view the contents of my cart to review the items and total price before placing the order.
-- As a user, I can edit items in my cart, such as changing the quantity or removing an item, to make adjustments to my order.
+- As a user, I can add menu menu to my cart by specifying the quantity, so I can prepare my order.
+- As a user, I can view the contents of my cart to review the menu and total price before placing the order.
+- As a user, I can edit menu in my cart, such as changing the quantity or removing an item, to make adjustments to my order.
 - As a user, I can clear my entire cart if I decide to cancel my selections.
 #### Order Placement
 - As a user, I can place an order by confirming my cart, so the restaurant receives my request for fulfillment.
 - As a user, I can view the status of my current order (e.g., Preparing, Ready, Delivered) to track its progress.
 #### Order History
-- As a user, I can view my past orders, including the items, prices, and order dates, to keep a record of my purchases.
+- As a user, I can view my past orders, including the menu, prices, and order dates, to keep a record of my purchases.
 #### Profile Management
 - As a user, I can view my account details, such as name, email, and phone number, to ensure my profile information is accurate.
 
@@ -77,7 +78,7 @@ Function deleteMenuItem(menuItemId):
 Function viewOrders():
     Fetch all Order objects from the database
     For each order:
-        Display order details (user, items, status, total price)
+        Display order details (user, menu, status, total price)
     Return orders list
 ```
 #### Update Order Status
@@ -126,7 +127,7 @@ Function addToCart(userId, menuItemId, quantity):
 Function viewCart(userId):
     Fetch all CartItem objects for the user
     Calculate total price
-    Return cart items and total price
+    Return cart menu and total price
 ```
 #### Edit Cart Item
 ```
@@ -149,7 +150,7 @@ Function placeOrder(userId):
     Fetch all CartItem objects for the user
     If Cart is not empty:
         Create new Order object
-        Add CartItems to the Order as OrderItems
+        Add Cartmenu to the Order as Ordermenu
         Calculate and update total price
         Save Order to the database
         Clear Cart for the user
@@ -225,16 +226,26 @@ Function updateProfile(userId, updatedDetails):
 | Update | `/orders/:orderId`                      | PUT       |
 | Delete | `/orders/:orderId`                      | DELETE    |
 
-### Items routes
+### Menu routes
 | Action | Route                                   | HTTP Verb |
 |--------|-----------------------------------------|-----------|
-| Index  | `/items`                               | GET       |
-| New    | `/items/new`                           | GET       |
-| Create | `/items`                               | POST      |
-| Show   | `/items/:orderId`                      | GET       |
-| Edit   | `/items/:orderId/edit`                 | GET       |
-| Update | `/items/:orderId`                      | PUT       |
-| Delete | `/items/:orderId`                      | DELETE    |
+| Index  | `/menu`                               | GET       |
+| New    | `/menu/new`                           | GET       |
+| Create | `/menu`                               | POST      |
+| Show   | `/menu/:menuId`                      | GET       |
+| Edit   | `/menu/:menuId/edit`                 | GET       |
+| Update | `/menu/:menuId`                      | PUT       |
+| Delete | `/menu/:menuId`                      | DELETE    |
+
+### Restaurant routes
+| Action | Route                                   | HTTP Verb |
+|--------|-----------------------------------------|-----------|
+| New    | `/profile/restaurant/new`                           | GET       |
+| Create | `/profile/restaurant`                               | POST      |
+| Show   | `/profile`                      | GET       |
+| Edit   | `/profile/restaurant`                 | GET       |
+| Update | `/profile/restaurant`                      | PUT       |
+| Delete | `/profile/restaurant`                      | DELETE    |
 
 ## Technologies
  - HTML

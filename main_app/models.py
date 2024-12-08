@@ -20,11 +20,14 @@ STATUS = (
     ('N', 'Not Paid')
 )
 
-class Profile():
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=320, unique=True)
-    address = models.CharField(max_length=150)
-
+    address = models.CharField(max_length=160)
+    
+    def __str__(self):
+        return self.user.username
+    
 class Menu(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=100)

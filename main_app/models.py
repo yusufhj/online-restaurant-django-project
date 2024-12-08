@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 CATEGORIES = (
     ('A', 'Appetizer'),
+    ('B', 'Beverage'),
+    ('D', 'Dessert'),
     ('E', 'Entree'),
     ('M', 'Main'),
     ('S', 'Side'),
-    ('D', 'Dessert'),
-    ('B', 'Beverage'),
     ('O', 'Other')
 )
 
@@ -33,13 +33,19 @@ class Order(models.Model):
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    categories = ArrayField(models.CharField(max_length=1, choices=CATEGORIES))
+    categories = ArrayField(models.CharField(max_length=1, choices=CATEGORIES, default=CATEGORIES[0][0]))
     orders_history = models.ManyToManyField(Order, blank=True, default=None)
     image = models.ImageField(upload_to='images/restaurant/', blank=True, default=None)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.name
+    
+    def get_categories(self):
+        return f"{', '.join([dict(CATEGORIES).get(cat) for cat in self.categories])}"
+    
+    def get_array_categories(self):
+        return [dict(CATEGORIES).get(cat) for cat in self.categories]
 
 
 class Menu(models.Model):
@@ -51,6 +57,9 @@ class Menu(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.name
-
-
+        return f'{self.get_category_display()} - {self.name}'
+    
+    # order not work
+    class Meta:
+        ordering = ['category', 'name']
+        

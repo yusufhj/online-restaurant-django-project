@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+<section>
+    <h2>{{ restaurant.name }}</h2>
+    <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
+    <p>{{ restaurant.address }}</p>
+    <p>{{ restaurant.get_categories }}</p>
+    <h3>Menu</h3>
+    <ul>
+        {% for cat in restaurant.get_array_categories %}
+            <li>{{ cat }}</li>
+            <ul>
+                {% for item in menus %}
+                    {% if item.get_category_display == cat %}
+                        <li>{{ item.name }} - ${{ item.price }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

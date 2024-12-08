@@ -22,7 +22,6 @@ STATUS = (
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField(max_length=320, unique=True)
     address = models.CharField(max_length=160)
     
     def __str__(self):

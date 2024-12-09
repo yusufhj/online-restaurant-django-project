@@ -17,7 +17,6 @@
               </a>
             </div>
           
-            
             <div class="navbar-end">
                 {% comment %} IF USER IS LOGGED IN {% endcomment %}
                 {% if user.is_authenticated %}
@@ -64,6 +63,11 @@
           </nav>
     </header>
     <main>
+        {% if user.profile.address == "" %}
+        <div class="notification is-warning is-light has-text-centered">
+          <p><strong>You're almost there!</strong></p> <p>Complete your account information by clicking <a href="/">here!</a></p>
+        </div>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </main>

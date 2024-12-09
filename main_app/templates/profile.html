@@ -1,0 +1,19 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %} 
+{% block content %}
+<div class="page-header">
+  <h1>Profile</h1>
+</div>
+{% if error_message %}
+  <p class="red-text">{{ error_message }}</p>
+{% endif %}
+  {% csrf_token %}
+  <section>
+    <h2>User Profile Page</h2>
+    <p>This is a section for the user profile</p>
+</section>
+
+{% endblock %}

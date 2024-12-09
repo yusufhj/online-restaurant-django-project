@@ -1,33 +1,37 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
+from .forms import UserRegisterForm
 from .models import Menu, Restaurant, Order, Category
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-# Create your views here.
-
-def signup(req):
-    error_message = ''
-    if req.method == 'POST':
-        form = UserCreationForm(req.POST)
-        if form.is_valid():
-            user = form.save()
-            login(req, user)
-            return redirect('home')
-        else:
-            error_message = 'Invalid sign up - try again'
-    # A bad POST or a GET request, so render signup.html with an empty form
-    form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
-    return render(req, 'registration/signup.html', context)
 
 class Login(LoginView):
     template_name = 'registeration/login.html'
 
 
 def home(req):
+    return render(req, 'home.html')
+
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
+        else:
+            error_message = 'Invalid sign up - try again'
+    form = UserRegisterForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'signup.html', context)
+
+def profile(req):
     return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
 
 def detail(req, restaurant_id):

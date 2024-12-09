@@ -15,7 +15,7 @@ class Login(LoginView):
 
 
 def home(req):
-    return render(req, 'home.html')
+    return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
 
 def signup(request):
     error_message = ''
@@ -32,7 +32,7 @@ def signup(request):
     return render(request, 'signup.html', context)
 
 def profile(req):
-    return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
+    return render(req, 'profile.html', {'restaurants': Restaurant.objects.all()})
 
 def detail(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)

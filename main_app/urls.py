@@ -12,7 +12,7 @@ urlpatterns = [
     
     path('restaurant/<int:restaurant_id>/menu', views.detail, name='detail'),
     path('restaurant/<int:restaurant_id>/menu/<int:menu_id>', views.menu_detail, name='menu_detail'),
-    
+
     path('restaurant/<int:restaurant_id>/menu/create', views.MenuCreate.as_view(), name='menu_create'),
     path('restaurant/<int:restaurant_id>/menu/<int:pk>/update', views.MenuUpdate.as_view(), name='menu_update'),
     path('restaurant/<int:restaurant_id>/menu/<int:pk>/delete', views.MenuDelete.as_view(), name='menu_delete'),

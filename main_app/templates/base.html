@@ -63,9 +63,9 @@
           </nav>
     </header>
     <main>
-        {% if user.profile.address == "" %}
+        {% if user.profile.address == "" and request.path != '/profile/' %}
         <div class="notification is-warning is-light has-text-centered">
-          <p><strong>You're almost there!</strong></p> <p>Complete your account information by clicking <a href="/">here!</a></p>
+          <p><strong>You're almost there!</strong></p> <p>Complete your account information by clicking <a href="/profile">here!</a></p>
         </div>
         {% endif %}
         {% block content %}

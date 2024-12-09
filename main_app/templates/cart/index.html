@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+<section>
+    <h2>Cart</h2>
+    <ul>
+        {% for item in cart %}
+            <li>{{ item.menu.name }} - {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

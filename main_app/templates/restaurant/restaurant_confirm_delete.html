@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+<section>
+    <h2>Are you sure you want to delete {{ restaurant.name }}?</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit">Yes</button>
+    </form>
+    <a href="{% url 'detail' restaurant.id %}">No</a>
+</section>
+{% endblock %}

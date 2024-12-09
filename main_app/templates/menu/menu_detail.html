@@ -6,14 +6,21 @@
     <h2>{{ restaurant.name }}</h2>
     <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
     <h3>{{menu.name}}</h3>
+    <div>
+        <a href="{% url 'menu_update' restaurant.id menu.id %}">Edit</a>
+        <a href="{% url 'menu_delete' restaurant.id menu.id %}">Delete</a>
+    </div>
     <img src="{{menu.image}}" alt="{{menu.name}}">
     <p>{{menu.description}}</p>
-    <p>{{menu.get_category_display}}</p>
+    <p>{{menu.category.name}}</p>
     <p>${{menu.price}}</p>
-    {% comment %} <form action="{% url 'add_to_cart' %}" method="POST">
+
+    {% comment %} 
+    <form action="{% url 'add_to_cart' %}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="menu_id" value="{{menu.id}}">
         <button type="submit">Add to cart</button>
-    </form> {% endcomment %}
+    </form> 
+    {% endcomment %}
 </section>
 {% endblock %}

@@ -6,20 +6,23 @@
     <h2>{{ restaurant.name }}</h2>
     <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
     <p>{{ restaurant.address }}</p>
-    <p>{{ restaurant.get_categories }}</p>
+    <p>{{ restaurant.get_categories_display }}</p>
     <div>
         <a href="{% url 'restaurant_update' restaurant.id %}">Edit</a>
         <a href="{% url 'restaurant_delete' restaurant.id %}">Delete</a>
     </div>
     <h3>Menu</h3>
+    <a href="{% url 'menu_create' restaurant.id %}">Add Menu Item</a>
     <ul>
-        {% for cat in restaurant.get_array_categories %}
-            <li>{{ cat }}</li>
+        {% for cat in restaurant.get_categories %}
+            <h4>{{ cat }}</h4>
             <ul>
                 {% for item in menus %}
-                    {% if item.get_category_display == cat %}
+                    {% if item.category.name == cat %}
                     <a href="{% url 'menu_detail' restaurant.id item.id %}">
-                        <li>{{ item.name }} - ${{ item.price }}</li>
+                        <li>{{ item.name }}</li>
+                        <li>{{ item.description }}</li>
+                        <li>{{ item.price }}</li>
                     </a>
                     {% endif %}
                 {% endfor %}

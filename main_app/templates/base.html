@@ -20,10 +20,13 @@
             
             <div class="navbar-end">
                 {% comment %} IF USER IS LOGGED IN {% endcomment %}
-                {% comment %} {% if user.is_authenticated %} {% endcomment %}
+                {% if user.is_authenticated %}
                 <!-- if user has restaurant show edit resraurant if not show add restaurant -->
                 <a class="navbar-item" href="{% url 'restaurant_create' %}">
                     Add Restaurant
+                </a>
+                <a class="navbar-item" href="{% url 'cart' %}">
+                Cart
                 </a>
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
@@ -34,27 +37,27 @@
                             <a class="navbar-item">
                                 Orders
                             </a>
-                            <a class="navbar-item">
-                            Cart
-                          </a>
                           <hr class="navbar-divider">
                           <a class="navbar-item">
-                              Logout
+                            <form id="logout-form" method="post" action="{% url 'logout' %}">
+                              {% csrf_token %}
+                              <button type="submit">Log out</button>
+                            </form>
                           </a>
                         </div>
                     </div>
                 {% comment %} IF USER IS NOT LOGGED IN {% endcomment %}
-                {% comment %} {% else %} {% endcomment %}
+                {% else %}
                     <div class="navbar-item">
                         <div class="buttons">
-                        <a class="button is-primary">
+                        <a class="button is-primary" href="{% url 'signup' %}">
                           <strong>Sign up</strong>
                         </a>
-                        <a class="button is-light">
+                        <a class="button is-light" href="{% url 'login' %}">
                           Log in
                         </a>
                     </div>
-                {% comment %} {% endif %} {% endcomment %}
+                {% endif %}
                 </div>
               </div>
             </div>

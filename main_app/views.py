@@ -1,8 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Menu, Restaurant, Order, Category
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
+
+def signup(req):
+    error_message = ''
+    if req.method == 'POST':
+        form = UserCreationForm(req.POST)
+        if form.is_valid():
+            user = form.save()
+            login(req, user)
+            return redirect('home')
+        else:
+            error_message = 'Invalid sign up - try again'
+    # A bad POST or a GET request, so render signup.html with an empty form
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(req, 'registration/signup.html', context)
+
+class Login(LoginView):
+    template_name = 'registeration/login.html'
+
 
 def home(req):
     return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
@@ -20,8 +43,13 @@ def add_menu(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     return render(req, 'menu/menu_form.html', {'restaurant': restaurant})
 
+def cart_index(req):
+    return render(req, 'cart/index.html', 
+                  {'orders': Order.objects.filter(user=req.user)}
+                  )
+
 # CBVs
-class RestaurantCreate(CreateView):
+class RestaurantCreate(LoginRequiredMixin, CreateView):
     model = Restaurant
     fields = ['name', 'address', 'categories', 'image']
     template_name = 'restaurant/restaurant_form.html'
@@ -91,4 +119,3 @@ class MenuDelete(DeleteView):
         context = super().get_context_data(**kwargs)
         context['restaurant_id'] = self.kwargs['restaurant_id']
         return context
-    

@@ -21,6 +21,10 @@
             <div class="navbar-end">
                 {% comment %} IF USER IS LOGGED IN {% endcomment %}
                 {% comment %} {% if user.is_authenticated %} {% endcomment %}
+                <!-- if user has restaurant show edit resraurant if not show add restaurant -->
+                <a class="navbar-item" href="{% url 'restaurant_create' %}">
+                    Add Restaurant
+                </a>
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
                           Profile

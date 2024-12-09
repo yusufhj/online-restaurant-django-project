@@ -7,6 +7,10 @@
     <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
     <p>{{ restaurant.address }}</p>
     <p>{{ restaurant.get_categories }}</p>
+    <div>
+        <a href="{% url 'restaurant_update' restaurant.id %}">Edit</a>
+        <a href="{% url 'restaurant_delete' restaurant.id %}">Delete</a>
+    </div>
     <h3>Menu</h3>
     <ul>
         {% for cat in restaurant.get_array_categories %}

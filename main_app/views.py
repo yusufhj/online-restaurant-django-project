@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .forms import UserRegisterForm
-from .models import Menu, Restaurant, Order, Category
+from .models import Menu, Restaurant, Order, Category, Profile
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
@@ -32,7 +32,7 @@ def signup(request):
     return render(request, 'signup.html', context)
 
 def profile(req):
-    return render(req, 'profile.html', {'restaurants': Restaurant.objects.all()})
+    return render(req, 'profile/detail.html', {'restaurants': Restaurant.objects.all()})
 
 def detail(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
@@ -53,6 +53,19 @@ def cart_index(req):
                   )
 
 # CBVs
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ['address',]
+    template_name = 'profile/profile_form.html'
+    success_url = '/profile/'
+    
+    # if user is trying to edit another user information, redirect to home page
+    def dispatch(self, request, *args, **kwargs):
+        pk = self.kwargs['pk']
+        if pk != self.request.user.id:
+            return redirect('/')
+        return super().dispatch(request, *args, **kwargs)
+
 class RestaurantCreate(LoginRequiredMixin, CreateView):
     model = Restaurant
     fields = ['name', 'address', 'categories', 'image']

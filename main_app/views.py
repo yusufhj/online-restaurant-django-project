@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .forms import UserRegisterForm
-from .models import Menu, Restaurant, Order, Category
+from .models import Menu, Restaurant, Order, Category, Profile
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
@@ -15,7 +15,7 @@ class Login(LoginView):
 
 
 def home(req):
-    return render(req, 'home.html')
+    return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
 
 def signup(request):
     error_message = ''
@@ -32,7 +32,7 @@ def signup(request):
     return render(request, 'signup.html', context)
 
 def profile(req):
-    return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
+    return render(req, 'profile/detail.html', {'restaurants': Restaurant.objects.all()})
 
 def detail(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
@@ -48,11 +48,75 @@ def add_menu(req, restaurant_id):
     return render(req, 'menu/menu_form.html', {'restaurant': restaurant})
 
 def cart_index(req):
+    session_cart = req.session.get('cart', {})
+    print('---------------------------------', session_cart)
+    cart = []
+    # get all items with the stored id
+    for cart_item_id in session_cart:
+        item = Menu.objects.get(id=cart_item_id)
+        # set quantity and total for each item
+        item.quantity = session_cart[str(item.id)]
+        item.total = item.price * item.quantity
+        
+        cart.append(item)
+    
     return render(req, 'cart/index.html', 
-                  {'orders': Order.objects.filter(user=req.user)}
+                  {'cart': cart}
                   )
 
+def cart_add(req, menu_id):
+    cart = req.session.get('cart', {})
+    # if item already exists in cart, increment by 1
+    if str(menu_id) in cart:
+        cart[str(menu_id)] = cart[str(menu_id)] + 1
+    else:
+        cart[menu_id] = cart.get(menu_id, 0) + 1 
+    
+    req.session['cart'] = cart
+    return redirect('/cart')
+
+def cart_remove(req, menu_id):
+    cart = req.session.get('cart', {})
+    # if item already exists in cart, increment by 1
+    if str(menu_id) in cart:
+        del cart[str(menu_id)]
+    
+    req.session['cart'] = cart
+    return redirect('/cart')
+
+def increment_cart_menu(req, menu_id):
+    cart = req.session.get('cart', {})
+    # increment by 1
+    cart[str(menu_id)] = cart[str(menu_id)] + 1
+    
+    req.session['cart'] = cart
+    return redirect('/cart')
+    
+def decrement_cart_item(req, menu_id):
+    cart = req.session.get('cart', {})
+    cart[str(menu_id)] = cart[str(menu_id)] - 1
+    # if item quantity is 0, remove item
+    if cart[str(menu_id)] <= 0:
+        del cart[str(menu_id)]
+    
+    req.session['cart'] = cart
+    return redirect('/cart')
+    
+    
 # CBVs
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ['address',]
+    template_name = 'profile/profile_form.html'
+    success_url = '/profile/'
+    
+    # if user is trying to edit another user information, redirect to home page
+    def dispatch(self, request, *args, **kwargs):
+        pk = self.kwargs['pk']
+        if pk != self.request.user.id:
+            return redirect('/')
+        return super().dispatch(request, *args, **kwargs)
+
 class RestaurantCreate(LoginRequiredMixin, CreateView):
     model = Restaurant
     fields = ['name', 'address', 'categories', 'image']

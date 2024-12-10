@@ -63,11 +63,6 @@
           </nav>
     </header>
     <main>
-        {% if user.profile.address == "" and "profile/" not in request.path %}
-        <div class="notification is-warning is-light has-text-centered">
-          <p><strong>You're almost there!</strong></p> <p>Complete your account information by clicking <a href="{% url 'profile_update' user.id %}">here!</a></p>
-        </div>
-        {% endif %}
         {% block content %}
         {% endblock %}
     </main>

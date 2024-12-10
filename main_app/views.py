@@ -106,16 +106,13 @@ def decrement_cart_item(req, menu_id):
 # CBVs
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
-    fields = ['address',]
+    fields = ['address']
     template_name = 'profile/profile_form.html'
-    success_url = '/profile/'
+    success_url = '/profile'
     
-    # if user is trying to edit another user information, redirect to home page
-    def dispatch(self, request, *args, **kwargs):
-        pk = self.kwargs['pk']
-        if pk != self.request.user.id:
-            return redirect('/')
-        return super().dispatch(request, *args, **kwargs)
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+    
 
 class RestaurantCreate(LoginRequiredMixin, CreateView):
     model = Restaurant

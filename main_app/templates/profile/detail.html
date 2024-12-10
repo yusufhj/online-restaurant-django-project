@@ -1,7 +1,7 @@
 {% extends 'base.html' %} 
 {% load static %} 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<!-- <link rel="stylesheet" href="{% static 'css/form.css' %}" /> -->
 {% endblock %} 
 {% block content %}
 <div class="page-header">
@@ -11,21 +11,21 @@
 {% endif %}
 <section>
   {% if user.profile.address == "" %}
-  <a href="{% url 'profile_update' user.id %}">
+  <a href="{% url 'profile_update' %}">
     <p>Enter your address to finish setting up your account</p>
   </a>
   {% else %}
-    <p>You can update your address <a href="{% url 'profile_update' user.id %}">here.</a></p>
+    <p>You can update your address <a href="{% url 'profile_update' %}">here.</a></p>
   {% endif %}
-  <form action="" method="post" class="form-container" autocomplete="off">
+
+  <!-- <form action="" method="post" class="form-container" autocomplete="off">
     {% csrf_token %}
-      {% comment %} <div class="field">
+      <div class="field">
         <label class="label" for="address">Delivery Address:</label>
         <input class="control" type="text" name="address" value={{user.profile.address}}>
-      </div> {% endcomment %}
-      {{ form.as_table }}
+      </div> 
       <button type="submit" class="button is-primary">Save</button>
-    </form>
+  </form> -->
 </section>
 
 {% endblock %}

@@ -20,4 +20,7 @@ urlpatterns = [
     
     path('cart', views.cart_index, name='cart'),
     path('cart/<int:menu_id>/add', views.cart_add, name='cart_add'),
+    path('cart/<int:menu_id>/remove', views.cart_remove, name='cart_remove'),
+    path('cart/<int:menu_id>/increment', views.increment_cart_menu, name='increment_cart_menu'),
+    path('cart/<int:menu_id>/decrement', views.decrement_cart_item, name='decrement_cart_item'),
 ]

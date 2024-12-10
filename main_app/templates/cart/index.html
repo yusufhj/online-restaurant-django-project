@@ -8,6 +8,15 @@
         {% for item in cart %}
             {% comment %} <li>{{ item }}</li> {% endcomment %}
             <li>{{ item.name }} - ${{ item.price }} x {{item.quantity}} = {{item.total}}</li>
+                <a href={% url 'increment_cart_menu' item.id %}><button class="button is-primary">+</button></a>
+            {{item.quantity}}</p>
+            <a href={% url 'decrement_cart_item' item.id %}><button class="button is-primary">-</button></a>
+            <li>
+                <form id="remove-from-cart-form" method="post" action="{% url 'cart_remove' item.id %}">
+                    {% csrf_token %}
+                    <button class="button is-primary">Remove</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
 </section>

@@ -75,6 +75,34 @@ def cart_add(req, menu_id):
     req.session['cart'] = cart
     return redirect('/cart')
 
+def cart_remove(req, menu_id):
+    cart = req.session.get('cart', {})
+    # if item already exists in cart, increment by 1
+    if str(menu_id) in cart:
+        del cart[str(menu_id)]
+    
+    req.session['cart'] = cart
+    return redirect('/cart')
+
+def increment_cart_menu(req, menu_id):
+    cart = req.session.get('cart', {})
+    # increment by 1
+    cart[str(menu_id)] = cart[str(menu_id)] + 1
+    
+    req.session['cart'] = cart
+    return redirect('/cart')
+    
+def decrement_cart_item(req, menu_id):
+    cart = req.session.get('cart', {})
+    cart[str(menu_id)] = cart[str(menu_id)] - 1
+    # if item quantity is 0, remove item
+    if cart[str(menu_id)] <= 0:
+        del cart[str(menu_id)]
+    
+    req.session['cart'] = cart
+    return redirect('/cart')
+    
+    
 # CBVs
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile

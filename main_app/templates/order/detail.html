@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+<section>
+    <!--     
+    status = models.CharField(max_length=1, choices=STATUS, default='P')
+    total = models.DecimalField(max_digits=7, decimal_places=3, default=0.000)
+    items = models.ManyToManyField('Menu', blank=True, default=None)
+    order_date = models.DateTimeField(auto_now_add=True)
+     -->
+    <h2>Order Detail</h2>
+    <p>Order ID: {{ order.id }}</p>
+    <p>Order Date: {{ order.order_date }}</p>
+    <p>Order Status: {{ order.status }}</p>
+    <p>Order Total: ${{ order.total }}</p>
+    <p>Order Items:</p>
+    <ul>
+        {% for item in order.items.all %}
+            <li>{{ item.name }} x {{ item.quantity }} - ${{ item.price }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'order_list' %}">Back to Orders</a>
+</section>
+{% endblock content %}

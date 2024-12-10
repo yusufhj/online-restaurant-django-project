@@ -4,7 +4,12 @@
 {% block content %}
 <section>
     <h2>{{ restaurant.name }}</h2>
-    <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
+    {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" style="width: 150px;">
+    {% else %}
+        <img src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
+    {% endif %}
+
     <p>{{ restaurant.address }}</p>
     <p>{{ restaurant.get_categories_display }}</p>
     <div>
@@ -21,7 +26,11 @@
                     {% if item.category.name == cat %}
                     <a href="{% url 'menu_detail' restaurant.id item.id %}">
                         <li>{{ item.name }}</li>
-                        <li>{{ item.description }}</li>
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 150px;">
+                        {% else %}
+                            <img src="https://via.placeholder.com/150" alt="{{ item.name }}">
+                        {% endif %}
                         <li>{{ item.price }}</li>
                     </a>
                     {% endif %}

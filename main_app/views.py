@@ -31,22 +31,29 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'signup.html', context)
 
+@login_required
 def profile(req):
     return render(req, 'profile/detail.html', {'restaurants': Restaurant.objects.all()})
 
+@login_required
+
 def detail(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
+    
     return render(req, 'restaurant/detail.html', {'restaurant': restaurant, 'menus': Menu.objects.filter(restaurant=restaurant)})
 
+@login_required
 def menu_detail(req, restaurant_id, menu_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     menu = Menu.objects.get(id=menu_id)
     return render(req, 'menu/menu_detail.html', {'restaurant': restaurant, 'menu': menu})
 
+@login_required
 def add_menu(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     return render(req, 'menu/menu_form.html', {'restaurant': restaurant})
 
+@login_required
 def cart_index(req):
     session_cart = req.session.get('cart', {})
     print('---------------------------------', session_cart)
@@ -64,6 +71,7 @@ def cart_index(req):
                   {'cart': cart}
                   )
 
+@login_required
 def cart_add(req, menu_id):
     cart = req.session.get('cart', {})
     # if item already exists in cart, increment by 1
@@ -75,6 +83,7 @@ def cart_add(req, menu_id):
     req.session['cart'] = cart
     return redirect('/cart')
 
+@login_required
 def cart_remove(req, menu_id):
     cart = req.session.get('cart', {})
     # if item already exists in cart, increment by 1
@@ -84,6 +93,7 @@ def cart_remove(req, menu_id):
     req.session['cart'] = cart
     return redirect('/cart')
 
+@login_required
 def increment_cart_menu(req, menu_id):
     cart = req.session.get('cart', {})
     # increment by 1
@@ -91,7 +101,8 @@ def increment_cart_menu(req, menu_id):
     
     req.session['cart'] = cart
     return redirect('/cart')
-    
+
+@login_required
 def decrement_cart_item(req, menu_id):
     cart = req.session.get('cart', {})
     cart[str(menu_id)] = cart[str(menu_id)] - 1
@@ -101,8 +112,35 @@ def decrement_cart_item(req, menu_id):
     
     req.session['cart'] = cart
     return redirect('/cart')
+
+@login_required
+def place_order(req):
+    session_cart = req.session.get('cart', {})
+    order = Order(user=req.user)
+    order.save()
     
+    for cart_item_id in session_cart:
+        item = Menu.objects.get(id=cart_item_id)
+        order.items.add(item)
     
+    order.total = sum([item.price * session_cart[str(item.id)] for item in order.items.all()])
+    order.save()
+    
+    req.session['cart'] = {}
+    return redirect('/orders')
+
+@login_required
+def orders(req):
+    orders = Order.objects.filter(user=req.user)
+    return render(req, 'order/index.html', {'orders': orders})
+
+@login_required
+def order_detail(req, pk):
+    order = Order.objects.get(id=pk)
+    if order.user != req.user:
+        return redirect('/orders')
+    return render(req, 'order/detail.html', {'order': order})
+
 # CBVs
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile

@@ -19,4 +19,5 @@ urlpatterns = [
     path('restaurant/<int:restaurant_id>/menu/<int:pk>/delete', views.MenuDelete.as_view(), name='menu_delete'),
     
     path('cart', views.cart_index, name='cart'),
+    path('cart/<int:menu_id>/add', views.cart_add, name='cart_add'),
 ]

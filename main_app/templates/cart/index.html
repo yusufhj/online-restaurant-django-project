@@ -6,7 +6,8 @@
     <h2>Cart</h2>
     <ul>
         {% for item in cart %}
-            <li>{{ item.menu.name }} - {{ item.quantity }}</li>
+            {% comment %} <li>{{ item }}</li> {% endcomment %}
+            <li>{{ item.name }} - ${{ item.price }} x {{item.quantity}} = {{item.total}}</li>
         {% endfor %}
     </ul>
 </section>

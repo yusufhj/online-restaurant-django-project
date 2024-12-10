@@ -48,9 +48,32 @@ def add_menu(req, restaurant_id):
     return render(req, 'menu/menu_form.html', {'restaurant': restaurant})
 
 def cart_index(req):
+    session_cart = req.session.get('cart', {})
+    print('---------------------------------', session_cart)
+    cart = []
+    # get all items with the stored id
+    for cart_item_id in session_cart:
+        item = Menu.objects.get(id=cart_item_id)
+        # set quantity and total for each item
+        item.quantity = session_cart[str(item.id)]
+        item.total = item.price * item.quantity
+        
+        cart.append(item)
+    
     return render(req, 'cart/index.html', 
-                  {'orders': Order.objects.filter(user=req.user)}
+                  {'cart': cart}
                   )
+
+def cart_add(req, menu_id):
+    cart = req.session.get('cart', {})
+    # if item already exists in cart, increment by 1
+    if str(menu_id) in cart:
+        cart[str(menu_id)] = cart[str(menu_id)] + 1
+    else:
+        cart[menu_id] = cart.get(menu_id, 0) + 1 
+    
+    req.session['cart'] = cart
+    return redirect('/cart')
 
 # CBVs
 class ProfileUpdate(LoginRequiredMixin, UpdateView):

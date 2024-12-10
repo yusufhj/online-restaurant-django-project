@@ -7,23 +7,34 @@
     {% if cart %}
     <ul>
         {% for item in cart %}
-            {% comment %} <li>{{ item }}</li> {% endcomment %}
-            <li>{{ item.name }} - ${{ item.price }} x {{item.quantity}} = {{item.total}}</li>
-            <div class='is-flex mt-5 mb-5'>
-                Quantity: 
-                <a href={% url 'increment_cart_menu' item.id %}><button class="button is-primary">+</button></a>
-                <p>{{item.quantity}}</p>
-                <a href={% url 'decrement_cart_item' item.id %}><button class="button is-primary">-</button></a>
-            </div>
             <li>
-                <form id="remove-from-cart-form" method="post" action="{% url 'cart_remove' item.id %}">
-                    {% csrf_token %}
-                    <button class="button is-primary">Remove</button>
-                </form>
+                <h4>
+                    {{ item.name }} - ${{ item.price }}
+                </h4>
+                <div class='is-flex mt-5 mb-5'>
+                    Quantity: 
+                    <a href={% url 'increment_cart_menu' item.id %}><button class="button is-primary">+</button></a>
+                    <p>{{item.quantity}}</p>
+                    <a href={% url 'decrement_cart_item' item.id %}><button class="button is-primary">-</button></a>
+                </div>
+
+                <p>
+                    Total: ${{ item.total }}
+                </p>
+
+                <div>
+                    <form id="remove-from-cart-form" method="post" action="{% url 'cart_remove' item.id %}">
+                        {% csrf_token %}
+                        <button class="button is-primary">Remove</button>
+                    </form>
+                </div>
             </li>
         {% endfor %}
     </ul>
-    <button class='button'>Place Order</button>
+    <h3>Total: ${{ total }}</h3>
+    <a href="{% url 'place_order' %}"><button class="button is-primary">
+        Place Order
+    </button></a>
     {% else %}
     <h2>Cart is empty</h2>
     {% endif %}

@@ -4,13 +4,22 @@
 {% block content %}
 <section>
     <h2>{{ restaurant.name }}</h2>
-    <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
+    <!-- {% if restaurant.image %}
+        <img src="{{ rest.image.url }}" alt="{{ restaurant.name }}" style="width: 150px;">
+    {% else %}
+        <img src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
+    {% endif %} -->
     <h3>{{menu.name}}</h3>
     <div>
         <a href="{% url 'menu_update' restaurant.id menu.id %}">Edit</a>
         <a href="{% url 'menu_delete' restaurant.id menu.id %}">Delete</a>
     </div>
-    <img src="{{menu.image}}" alt="{{menu.name}}">
+    {% if menu.image %}
+        <img src="{{ menu.image.url }}" alt="{{ menu.name }}" style="width: 150px;">
+    {% else %}
+        <img src="https://via.placeholder.com/150" alt="{{ menu.name }}">
+    {% endif %}
+    
     <p>{{menu.description}}</p>
     <p>{{menu.category.name}}</p>
     <p>${{menu.price}}</p>

@@ -7,11 +7,18 @@
     <ul>
         {% for rest in restaurants %}
             <a href="{% url 'detail' rest.id %}">
-                <img src="{{ rest.image }}" alt="{{ rest.name }}">
-                <li>{{ rest.name }}</li>
-                <li>{{ rest.address }}</li>
-                <li>{{ rest.get_categories_display }}</li>
+
+                <p>{{ rest.name }}</p>
+                {% if rest.image %}
+                    <img src="{{ rest.image.url }}" alt="{{ rest.name }}" style="width: 150px;">
+                {% else %}
+                    <img src="https://via.placeholder.com/150" alt="{{ rest.name }}">
+                {% endif %}
+
+                <p>{{ rest.address }}</p>
+                <p>{{ rest.get_categories_display }}</p>
             </a>
+            <br>
         {% endfor %}
     </ul>
 </section>

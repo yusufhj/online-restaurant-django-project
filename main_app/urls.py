@@ -1,12 +1,15 @@
 from django.urls import path
 from . import views
+from .views import RestaurantOwnerSignupView, CustomerSignupView
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('profile/', views.profile, name='profile'),
     path('profile/<int:pk>/update', views.ProfileUpdate.as_view(), name='profile_update'),
     path('accounts/login', views.Login.as_view(), name='login'),
-    path('accounts/signup', views.signup, name='signup'),
+    # path('accounts/signup', views.signup, name='signup'),
+    path('accounts/signup/restaurant-owner/', RestaurantOwnerSignupView.as_view(), name='restaurant_owner_signup'),
+    path('accounts/signup/customer/', CustomerSignupView.as_view(), name='customer_signup'),
     path('restaurant/create', views.RestaurantCreate.as_view(), name='restaurant_create'),
     path('restaurant/<int:pk>/update', views.RestaurantUpdate.as_view(), name='restaurant_update'),
     path('restaurant/<int:pk>/delete', views.RestaurantDelete.as_view(), name='restaurant_delete'),
@@ -23,4 +26,5 @@ urlpatterns = [
     path('cart/<int:menu_id>/remove', views.cart_remove, name='cart_remove'),
     path('cart/<int:menu_id>/increment', views.increment_cart_menu, name='increment_cart_menu'),
     path('cart/<int:menu_id>/decrement', views.decrement_cart_item, name='decrement_cart_item'),
+    
 ]

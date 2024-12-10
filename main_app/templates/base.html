@@ -49,7 +49,10 @@
                 {% else %}
                     <div class="navbar-item">
                         <div class="buttons">
-                        <a class="button is-primary" href="{% url 'signup' %}">
+                        <a class="button is-primary" href="{% url 'restaurant_owner_signup' %}">
+                          <strong>Sign up</strong>
+                        </a>
+                        <a class="button is-primary" href="{% url 'customer_signup' %}">
                           <strong>Sign up</strong>
                         </a>
                         <a class="button is-light" href="{% url 'login' %}">
@@ -68,6 +71,7 @@
           <p><strong>You're almost there!</strong></p> <p>Complete your account information by clicking <a href="{% url 'profile_update' user.id %}">here!</a></p>
         </div>
         {% endif %}
+
         {% block content %}
         {% endblock %}
     </main>

@@ -4,13 +4,17 @@
 {% block content %}
 <section>
     <h2>Cart</h2>
+    {% if cart %}
     <ul>
         {% for item in cart %}
             {% comment %} <li>{{ item }}</li> {% endcomment %}
             <li>{{ item.name }} - ${{ item.price }} x {{item.quantity}} = {{item.total}}</li>
+            <div class='is-flex mt-5 mb-5'>
+                Quantity: 
                 <a href={% url 'increment_cart_menu' item.id %}><button class="button is-primary">+</button></a>
-            {{item.quantity}}</p>
-            <a href={% url 'decrement_cart_item' item.id %}><button class="button is-primary">-</button></a>
+                <p>{{item.quantity}}</p>
+                <a href={% url 'decrement_cart_item' item.id %}><button class="button is-primary">-</button></a>
+            </div>
             <li>
                 <form id="remove-from-cart-form" method="post" action="{% url 'cart_remove' item.id %}">
                     {% csrf_token %}
@@ -19,5 +23,9 @@
             </li>
         {% endfor %}
     </ul>
+    <button class='button'>Place Order</button>
+    {% else %}
+    <h2>Cart is empty</h2>
+    {% endif %}
 </section>
 {% endblock %}

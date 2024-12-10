@@ -18,19 +18,19 @@ class Login(LoginView):
 def home(req):
     return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
 
-# def signup(request):
-#     error_message = ''
-#     if request.method == 'POST':
-#         form = UserRegisterForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             return redirect('/')
-#         else:
-#             error_message = 'Invalid sign up - try again'
-#     form = UserRegisterForm()
-#     context = {'form': form, 'error_message': error_message}
-#     return render(request, 'signup.html', context)
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
+        else:
+            error_message = 'Invalid sign up - try again'
+    form = UserRegisterForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'signup.html', context)
 
 @login_required
 def profile(req):

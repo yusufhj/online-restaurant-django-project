@@ -14,7 +14,6 @@ from .decorators import RestaurantOwnerRequiredMixin, restaurant_owner_required
 class Login(LoginView):
     template_name = 'registeration/login.html'
 
-
 def home(req):
     return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
 

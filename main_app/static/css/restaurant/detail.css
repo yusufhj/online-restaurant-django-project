@@ -1,0 +1,227 @@
+/* General Styles for the Restaurant Page */
+.restaurant-page {
+    font-family: 'Arial', sans-serif;
+    margin: 0 auto;
+    padding: 30px;
+    max-width: 1200px;
+    background-color: #f4f4f4;
+}
+
+/* Restaurant Header */
+.restaurant-header {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.restaurant-title h2 {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+/* Restaurant Details Section */
+.restraurant-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.restaurant-image {
+    flex: 1;
+    min-width: 150px;
+    max-width: 250px;
+}
+
+.restaurant-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.restaurant-image img:hover {
+    transform: scale(1.05);
+}
+
+.restaurant-description {
+    flex: 2;
+    min-width: 300px;
+}
+
+.restaurant-description p {
+    font-size: 1.1em;
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+/* Restaurant Actions (Edit, Delete, Orders) */
+.restaurant-actions {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.restaurant-actions a {
+    text-decoration: none;
+    background-color: #3273dc;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s;
+    display: inline-block;
+}
+
+.restaurant-actions a:hover {
+    background-color: #225bb2;
+    transform: translateY(-3px);
+}
+
+.restaurant-actions a:active {
+    background-color: #1e4e8c;
+    transform: translateY(1px);
+}
+
+/* Restaurant Menu Section */
+.restaurant-menu {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+/* Menu Header */
+.menu-header h3 {
+    font-size: 2em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Menu Categories */
+.menu-category {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e3e3e3;
+}
+
+.menu-category h4 {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+/* Menu Item */
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.menu-item {
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.item-name h5 {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.item-description p {
+    font-size: 1em;
+    color: #666;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.item-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-top: 15px;
+}
+
+.item-price p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #3273dc;
+    margin-top: 10px;
+}
+
+/* Placeholder for images */
+.item-image img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .restaurant-header {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .restraurant-details {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: center;
+    }
+
+    .restaurant-image {
+        max-width: 100%;
+        min-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .restaurant-title h2 {
+        font-size: 2em;
+    }
+
+    .restaurant-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu-category h4 {
+        font-size: 1.5em;
+    }
+
+    .menu-item {
+        padding: 15px;
+    }
+}

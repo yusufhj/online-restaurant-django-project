@@ -1,0 +1,70 @@
+/* About Container Styling */
+.about-container {
+    padding: 40px 20px;
+    text-align: center;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    background: url('https://example.com/restaurant-background.jpg') no-repeat center center;
+    background-size: cover;
+    color: white;  /* Adjust text color for readability on top of the background */
+}
+
+/* About Header */
+.about-header {
+    background: linear-gradient(135deg, #3273dc, #225bb2);
+    padding: 20px 0;
+    text-align: center;
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 30px;
+}
+
+/* About Header Title */
+.about-header h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+/* About Content */
+.about-content {
+    max-width: 1000px; /* Limit the width of content */
+    margin: 0 auto;
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Paragraph Styling */
+.about-content p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+/* Link Styling */
+.about-content a {
+    color: #3273dc;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.about-content a:hover {
+    color: #225bb2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-header h1 {
+        font-size: 2em;
+    }
+
+    .about-content {
+        font-size: 1.1em;
+    }
+
+    .about-container {
+        padding: 30px 15px; /* Adjusted padding on smaller screens */
+    }
+}

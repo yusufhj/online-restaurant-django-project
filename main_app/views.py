@@ -17,6 +17,9 @@ class Login(LoginView):
 def home(req):
     return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
 
+def about(req):
+    return render(req, 'about.html')
+
 @login_required
 def profile(req):
     return render(req, 'profile/detail.html', {'restaurants': Restaurant.objects.all()})
@@ -282,13 +285,19 @@ class RestaurantOwnerSignupView(FormView):
     template_name = 'registration/signup.html'
     form_class = RestaurantOwnerSignupForm
     success_url = reverse_lazy('home')
-
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_type'] = 'owner'
+        return context
+    
     def form_valid(self, form):
         user = form.save()  # Save the user instance
 
         profile = user.profile
         profile.role = 'RestaurantOwner'
         profile.save()
+        
 
         login(self.request, user)
         return super().form_valid(form)
@@ -298,7 +307,12 @@ class CustomerSignupView(FormView):
     template_name = 'registration/signup.html'
     form_class = CustomerSignupForm
     success_url = reverse_lazy('home')
-
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_type'] = 'customer'
+        return context
+    
     def form_valid(self, form):
         user = form.save()  # Save the user instance
 

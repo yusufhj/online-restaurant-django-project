@@ -1,17 +1,33 @@
 {% extends "base.html" %}
+{% load static %} 
 {% block head %}
-{% endblock head %}
+<link rel="stylesheet" href="{% static 'css/registeration/signup.css' %}">
+{% endblock %}
+
 {% block content %}
-  <h1>Sign Up</h1>
-{% if error_message %}
-  <p class="red-text">{{ error_message }}</p>
-{% endif %}
-<form action="" method="post" class="form-container" autocomplete="off">
-  {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
-  <button type="submit" class="btn submit">Submit!</button>
-</form>
+<section class="signup-page">
+  <div class="signup-form">
+    <div class="signup-page-header">
+        <h1 class="signup-title">
+          Sign Up {% if user_type == 'owner' %}As Restaurant Owner{% elif user_type == 'customer' %}As Customer{% endif %}
+        </h1>
+    </div>
+    <div class="signup-form-container">
+      {% if error_message %}
+      <p class="error-message">{{ error_message }}</p>
+      {% endif %}
+      <form action="" method="post" class="form-container" autocomplete="off">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.as_p }}
+        </div>
+        <button type="submit" class="button primary-button">
+          Sign Up As {% if user_type == 'owner' %}Restaurant Owner{% elif user_type == 'customer' %}Customer{% endif %}
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
 
 {% endblock %}

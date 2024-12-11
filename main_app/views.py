@@ -156,7 +156,7 @@ def order_detail(req, pk):
             if item.id == menu_item.menu.id:
                 item_quantities[item.name] = menu_item.quantity
     
-    if order.user != req.user:
+    if order.user != req.user and order.items.first().restaurant.user != req.user:
         return redirect('/orders')
     return render(req, 'order/detail.html', {'order': order, 'item_quantities': item_quantities})
 

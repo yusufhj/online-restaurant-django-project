@@ -79,3 +79,6 @@ class MenuOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.menu.name

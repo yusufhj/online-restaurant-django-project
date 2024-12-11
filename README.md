@@ -2,6 +2,8 @@
 
 ## 🚀 Live Demo
 
+[Online Restaurant Management System](https://onlinerestaurant-747c4ab72768.herokuapp.com/)
+
 ## Introduction
 
 The Restaurant Management System is a comprehensive web application designed to streamline restaurant operations and enhance the customer experience. This system enables restaurant administrators to efficiently manage menu menu, categorize them, and oversee user orders. Customers can browse the menu, add menu to their cart, place orders, and manage their profiles with ease.
@@ -191,9 +193,6 @@ Function updateProfile(userId, updatedDetails):
 ![Profile Page](assets/mockups/ProfilePage.jpg)
 ### Order History and Cart Page
 ![Order History and Cart Page](assets/mockups/customPage.jpg)
-
-## Data Models
-
 
 
 ## Routes

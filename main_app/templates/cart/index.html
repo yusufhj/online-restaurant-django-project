@@ -1,42 +1,64 @@
 {% extends "base.html" %}
+{% load static %}
 {% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock head %}
 {% block content %}
-<section>
-    <h2>Cart</h2>
+<section class="container">
+    <div class="title-container">
+        <h1 class="title text-center">My Cart</h1>
+    </div>
     {% if cart %}
-    <ul>
-        {% for item in cart %}
-            <li>
-                <h4>
-                    {{ item.name }} - ${{ item.price }}
-                </h4>
-                <div class='is-flex mt-5 mb-5'>
-                    Quantity: 
-                    <a href={% url 'increment_cart_menu' item.id %}><button class="button is-primary">+</button></a>
-                    <p>{{item.quantity}}</p>
-                    <a href={% url 'decrement_cart_item' item.id %}><button class="button is-primary">-</button></a>
+    <div class="cart-parent is-flex">
+        <div style="width: 60%" class="restaurant-grid">
+            {% for item in cart %}
+            <div class="restaurant-card">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image">
+                            {% if rest.image %}
+                                <img src="{{ rest.image.url }}" alt="{{ rest.name }} image">
+                            {% else %}
+                                <img src="https://via.placeholder.com/150" alt="{{ rest.name }} placeholder image">
+                            {% endif %}
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <p class="title">{{ item.name }}</p>
+                        <p class="subtitle">BHD {{ item.total }}</p>
+                    </div>
+                    <footer class="card-footer">
+                        <a class="card-footer-item button is-primary" href={% url 'increment_cart_menu' item.id %}>+</a>
+                        <p class="card-footer-item">{{item.quantity}}</p>
+                        <a class="card-footer-item button is-primary" href={% url 'decrement_cart_item' item.id %}>-</a>
+                    </footer>
+                    <footer class="card-footer has-background-light">
+                        <form class="card-footer-item" id="remove-from-cart-form" method="post" action="{% url 'cart_remove' item.id %}">   
+                            {% csrf_token %}
+                            <button class="button is-danger is-light">Remove</button>
+                        </form>
+                    </footer>
                 </div>
-
-                <p>
-                    Total: ${{ item.total }}
-                </p>
-
-                <div>
-                    <form id="remove-from-cart-form" method="post" action="{% url 'cart_remove' item.id %}">
-                        {% csrf_token %}
-                        <button class="button is-primary">Remove</button>
-                    </form>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
-    <h3>Total: ${{ total }}</h3>
-    <a href="{% url 'place_order' %}"><button class="button is-primary">
-        Place Order
-    </button></a>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="width: 40%; height: 250px" class="box content ml-5 p-5">
+            <p class="is-size-5">Summary:</p>
+            <div class="is-flex is-justify-content-space-between">
+            <p class="is-size-6">Delivery Charges:</p>
+            <h6 class="is-size-6">Free</h6>
+            </div>
+            <div class="is-flex is-justify-content-space-between">
+                <p class="is-size-6">Total:</p>
+                <h6 class="is-size-6">BHD {{ total_price }}</h6>
+            </div>
+            <a href="{% url 'place_order' %}"><button class="button is-fullwidth is-primary">
+                Place Order
+            </button></a>
+        </div>
+    </div>
     {% else %}
-    <h2>Cart is empty</h2>
+    <p class="title">Cart is empty</p>
     {% endif %}
 </section>
 {% endblock %}

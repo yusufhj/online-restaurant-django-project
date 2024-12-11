@@ -16,8 +16,9 @@
     <p>Order Total: ${{ order.total }}</p>
     <p>Order Items:</p>
     <ul>
+        {% load register_filter %}
         {% for item in order.items.all %}
-            <li>{{ item.name }} x {{ item.quantity }} - ${{ item.price }}</li>
+            <li>{{ item.name }} x {{ item_quantities|hash:item.name }}  - ${{ item.price }}</li>
         {% endfor %}
     </ul>
     <a href="{% url 'order_list' %}">Back to Orders</a>

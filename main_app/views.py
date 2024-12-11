@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
 from .forms import UserRegisterForm
-from .models import Menu, Restaurant, Order, Category, Profile
+from .models import Menu, Restaurant, Order, Category, Profile, MenuOrder
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
-
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -126,6 +124,14 @@ def place_order(req):
     order.total = sum([item.price * session_cart[str(item.id)] for item in order.items.all()])
     order.save()
     
+    
+    for item in session_cart:
+        menu_order = MenuOrder()
+        menu_order.order = order
+        menu_order.menu = Menu.objects.get(id=item)
+        menu_order.quantity = session_cart[item]
+        menu_order.save()
+    
     req.session['cart'] = {}
     return redirect('/orders')
 
@@ -137,9 +143,19 @@ def orders(req):
 @login_required
 def order_detail(req, pk):
     order = Order.objects.get(id=pk)
+    menu_order = MenuOrder.objects.filter(order__id = pk)
+    item_quantities = {item.name: 0 for item in order.items.all()}
+    
+    # loop through all items, then loop through all related items in the order
+    for item in order.items.all():
+        for menu_item in menu_order.all():
+            # if related table item belongs to current item, assign quantity
+            if item.id == menu_item.menu.id:
+                item_quantities[item.name] = menu_item.quantity
+    
     if order.user != req.user:
         return redirect('/orders')
-    return render(req, 'order/detail.html', {'order': order})
+    return render(req, 'order/detail.html', {'order': order, 'item_quantities': item_quantities})
 
 # CBVs
 class ProfileUpdate(LoginRequiredMixin, UpdateView):

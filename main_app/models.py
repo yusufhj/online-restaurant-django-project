@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-
 # Category choices
 STATUS = (
     ('P', 'Pending'),
@@ -42,7 +41,6 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     categories = models.ManyToManyField(Category)
-    # quantity = models.IntegerField(default=0)
     orders_history = models.ManyToManyField(Order, blank=True, default=None)
     image = models.ImageField(upload_to='images/restaurant/', blank=True, default=None)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -76,3 +74,7 @@ class Menu(models.Model):
     
     class Meta:
         ordering = ['category', 'name']
+
+class MenuOrder(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)

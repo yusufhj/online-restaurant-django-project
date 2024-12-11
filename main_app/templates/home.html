@@ -3,23 +3,49 @@
 {% endblock head %}
 {% block content %}
 {% comment %} multiple ul just to make sure page content is being displayed {% endcomment %}
-<section>
-    <ul>
+<section class="container">
+    <h1 class="is-size-1">Restaurants</h1>
+    <br>
+    <div class="fixed-grid has-4-cols is-multiline">
+        <div class="grid">
         {% for rest in restaurants %}
-            <a href="{% url 'detail' rest.id %}">
-
-                <p>{{ rest.name }}</p>
-                {% if rest.image %}
-                    <img src="{{ rest.image.url }}" alt="{{ rest.name }}" style="width: 150px;">
-                {% else %}
-                    <img src="https://via.placeholder.com/150" alt="{{ rest.name }}">
-                {% endif %}
-
-                <p>{{ rest.address }}</p>
-                <p>{{ rest.get_categories_display }}</p>
-            </a>
-            <br>
+        <a href="{% url 'detail' rest.id %}">
+        <div class="cell">
+            <div class="card">
+                <div class="card-image">
+                    <div style="width: 15rem">
+                        <figure class="image is-9y16">
+                            {% if rest.image %}
+                                <img src="{{ rest.image.url }}" alt="{{ rest.name }}" style="width: 150px;">
+                            {% else %}
+                                <img src="https://via.placeholder.com/150" alt="{{ rest.name }}">
+                            {% endif %}
+                        </figure>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                {% if rest.image %}
+                                    <img src="{{ rest.image.url }}" alt="{{ rest.name }}" style="width: 150px;">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/150" alt="{{ rest.name }}">
+                                {% endif %}
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p>{{ rest.name }}</p>
+                            <p>{{ rest.address }}</p>
+                            <p>{{ rest.get_categories_display }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
         {% endfor %}
-    </ul>
+        </div>
+    </div>
 </section>
 {% endblock %}

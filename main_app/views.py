@@ -11,7 +11,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class Login(LoginView):
     template_name = 'registeration/login.html'
 
-
 def home(req):
     return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
 
@@ -34,7 +33,6 @@ def profile(req):
     return render(req, 'profile/detail.html', {'restaurants': Restaurant.objects.all()})
 
 @login_required
-
 def detail(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     

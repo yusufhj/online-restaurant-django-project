@@ -36,9 +36,9 @@ def signup(request):
 def profile(req):
     return render(req, 'profile/detail.html', {'restaurants': Restaurant.objects.all()})
 
-@login_required
 def detail(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
+    
     return render(req, 'restaurant/detail.html', {'restaurant': restaurant, 'menus': Menu.objects.filter(restaurant=restaurant)})
 
 @login_required
@@ -47,8 +47,6 @@ def menu_detail(req, restaurant_id, menu_id):
     menu = Menu.objects.get(id=menu_id)
     return render(req, 'menu/menu_detail.html', {'restaurant': restaurant, 'menu': menu})
 
-@login_required
-@group_required('RestaurantOwner')
 def add_menu(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     return render(req, 'menu/menu_form.html', {'restaurant': restaurant})
@@ -112,8 +110,35 @@ def decrement_cart_item(req, menu_id):
     
     req.session['cart'] = cart
     return redirect('/cart')
+
+@login_required
+def place_order(req):
+    session_cart = req.session.get('cart', {})
+    order = Order(user=req.user)
+    order.save()
     
+    for cart_item_id in session_cart:
+        item = Menu.objects.get(id=cart_item_id)
+        order.items.add(item)
     
+    order.total = sum([item.price * session_cart[str(item.id)] for item in order.items.all()])
+    order.save()
+    
+    req.session['cart'] = {}
+    return redirect('/orders')
+
+@login_required
+def orders(req):
+    orders = Order.objects.filter(user=req.user)
+    return render(req, 'order/index.html', {'orders': orders})
+
+@login_required
+def order_detail(req, pk):
+    order = Order.objects.get(id=pk)
+    if order.user != req.user:
+        return redirect('/orders')
+    return render(req, 'order/detail.html', {'order': order})
+
 # CBVs
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
@@ -206,18 +231,3 @@ class MenuDelete(GroupRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['restaurant_id'] = self.kwargs['restaurant_id']
         return context
-    
-
-from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
-from .forms import RestaurantOwnerSignupForm, CustomerSignupForm
-
-class RestaurantOwnerSignupView(FormView):
-    template_name = 'registration/signup.html'
-    form_class = RestaurantOwnerSignupForm
-    success_url = reverse_lazy('login')
-
-class CustomerSignupView(FormView):
-    template_name = 'registration/signup.html'
-    form_class = CustomerSignupForm
-    success_url = reverse_lazy('login')

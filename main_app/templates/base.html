@@ -8,14 +8,21 @@
     {% block head %}
     {% endblock %}
 </head>
-<body>
+<body style="margin: 0; font-family: Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; color: #333;">
     <header>
         <nav class="navbar has-background-warning-light" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
               <a class="navbar-item" href="/">
                 <img src="https://cdn-icons-png.flaticon.com/512/3448/3448609.png" alt="Logo"> {% comment %} Placeholder image {% endcomment %}
+                <strong>Online Restaurant</strong>
               </a>
             </div>
+            <div class="navbar-menu">
+              <div class="navbar-start">
+                <a class="navbar-item" href="{% url 'about' %}">
+                  <strong>About</strong>
+                </a>
+              </div>
           
             <div class="navbar-end">
                 {% comment %} IF USER IS LOGGED IN {% endcomment %}
@@ -54,11 +61,11 @@
                 {% else %}
                     <div class="navbar-item">
                         <div class="buttons">
-                        <a class="button is-primary" href="{% url 'restaurant_owner_signup' %}">
+                        <!-- <a class="button is-primary" href="{% url 'restaurant_owner_signup' %}">
                           <strong>Sign up Restaurant Owner</strong>
-                        </a>
+                        </a> -->
                         <a class="button is-primary" href="{% url 'customer_signup' %}">
-                          <strong>Sign up Customer</strong>
+                          <strong>Sign up</strong>
                         </a>
                         <a class="button is-light" href="{% url 'login' %}">
                           Log in
@@ -70,7 +77,7 @@
             </div>
           </nav>
     </header>
-    <main>
+    <main style="flex: 1; padding: 20px;">
         {% if user.profile.address == "" and "profile/" not in request.path %}
           <div class="notification is-warning is-light has-text-centered">
             <p><strong>You're almost there!</strong></p> <p>Complete your account information by clicking <a href="{% url 'profile_update' %}">here!</a></p>

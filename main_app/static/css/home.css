@@ -1,0 +1,121 @@
+/* Container Styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Title Styling */
+.title {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+/* Title Container Styling */
+.title-container {
+    background: linear-gradient(135deg, #3273dc, #225bb2);
+    padding: 30px 20px; /* Adjusted padding for better vertical alignment */
+    text-align: center;
+    border-radius: 12px; /* Added a larger border-radius for smoother edges */
+    color: white;
+    margin-bottom: 40px; /* Increased margin for more space */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+}
+
+/* Grid Layout for Restaurants */
+.restaurant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 0;
+}
+
+/* Restaurant Card Styling */
+.restaurant-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none; /* Remove any border */
+}
+
+/* Card Hover Effect */
+.restaurant-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Image Styling */
+.card-image {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.card-image figure {
+    margin: 0;
+    height: 200px;
+}
+
+.card-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Card Content Styling */
+.card-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Restaurant Name Styling */
+.restaurant-name {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+/* Restaurant Address Styling */
+.restaurant-address {
+    font-size: 1.1em;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+
+/* Restaurant Categories Styling */
+.restaurant-categories {
+    font-size: 0.9em;
+    color: #3498db;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2em;
+    }
+
+    .restaurant-card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .restaurant-name {
+        font-size: 1.2em;
+    }
+
+    .restaurant-address {
+        font-size: 1em;
+    }
+
+    /* Adjust title container for smaller screens */
+    .title-container {
+        padding: 25px 20px;
+    }
+}

@@ -4,6 +4,7 @@ from .views import RestaurantOwnerSignupView, CustomerSignupView
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('about/', views.about, name='about'),
     path('profile/', views.profile, name='profile'),
     path('profile/update', views.ProfileUpdate.as_view(), name='profile_update'),
     

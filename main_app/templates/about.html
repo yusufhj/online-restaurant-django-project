@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock head %}
+{% block content %}
+
+<section class="about-container">
+    <div class="about-header">
+        <h1>About Us</h1>
+    </div>
+    <div class="about-content">
+        <p>Welcome to our online restaurant platform! We are dedicated to connecting food lovers with the best restaurants in town. Our mission is to provide a seamless and enjoyable dining experience for everyone.</p>
+        <p>Whether you are looking for a quick bite or a fine dining experience, we have something for everyone. Our platform features a wide variety of restaurants, each offering unique and delicious dishes.</p>
+        <p>We believe in supporting local businesses and helping them thrive. By joining our platform, restaurant owners can reach a larger audience and grow their customer base.</p>
+        <p>If you are a restaurant owner and would like to join our website, please <a href="{% url 'restaurant_owner_signup' %}">sign up here</a>.</p>
+    </div>
+</section>
+    
+{% endblock %}

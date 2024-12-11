@@ -15,9 +15,17 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=320)
     address = models.CharField(max_length=160, blank=True)
-    
+    ROLE_CHOICES = (
+        ('RestaurantOwner', 'Restaurant Owner'),
+        ('Customer', 'Customer'),
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='Customer')
+
     def __str__(self):
         return self.user.username
+    
+    def get_user_role(self):
+        return self.role
     
 class Order(models.Model):
     status = models.CharField(max_length=1, choices=STATUS, default='P')

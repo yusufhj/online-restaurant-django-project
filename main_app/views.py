@@ -18,24 +18,13 @@ class Login(LoginView):
 def home(req):
     return render(req, 'home.html', {'restaurants': Restaurant.objects.all()})
 
-def signup(request):
-    error_message = ''
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('/')
-        else:
-            error_message = 'Invalid sign up - try again'
-    form = UserRegisterForm()
-    context = {'form': form, 'error_message': error_message}
-    return render(request, 'signup.html', context)
+
 
 @login_required
 def profile(req):
     return render(req, 'profile/detail.html', {'restaurants': Restaurant.objects.all()})
 
+@login_required
 def detail(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     
@@ -47,6 +36,7 @@ def menu_detail(req, restaurant_id, menu_id):
     menu = Menu.objects.get(id=menu_id)
     return render(req, 'menu/menu_detail.html', {'restaurant': restaurant, 'menu': menu})
 
+@login_required
 def add_menu(req, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     return render(req, 'menu/menu_form.html', {'restaurant': restaurant})
@@ -231,3 +221,62 @@ class MenuDelete(GroupRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['restaurant_id'] = self.kwargs['restaurant_id']
         return context
+    
+
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+from .forms import RestaurantOwnerSignupForm, CustomerSignupForm
+from django.contrib.auth.models import Group
+
+class RestaurantOwnerSignupView(FormView):
+    template_name = 'registration/signup.html'
+    form_class = RestaurantOwnerSignupForm
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        user = form.save()  # Save the user instance
+        # Assign the user to the "RestaurantOwner" group
+        
+        # restaurant_owner_group, created = Group.objects.get_or_create(name='RestaurantOwner')
+        # user.groups.add(restaurant_owner_group)
+
+        profile = user.profile
+        profile.role = 'RestaurantOwner'
+        profile.save()
+
+        login(self.request, user)
+        return super().form_valid(form)
+
+
+class CustomerSignupView(FormView):
+    template_name = 'registration/signup.html'
+    form_class = CustomerSignupForm
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        user = form.save()  # Save the user instance
+        # Assign the user to the "Customer" group
+        
+        # customer_group, created = Group.objects.get_or_create(name='Customer')
+        # user.groups.add(customer_group)
+
+        profile = user.profile
+        profile.role = 'Customer'
+        profile.save()
+
+        login(self.request, user)
+        return super().form_valid(form)
+
+# def signup(request):
+#     error_message = ''
+#     if request.method == 'POST':
+#         form = UserRegisterForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user)
+#             return redirect('/')
+#         else:
+#             error_message = 'Invalid sign up - try again'
+#     form = UserRegisterForm()
+#     context = {'form': form, 'error_message': error_message}
+#     return render(request, 'signup.html', context)

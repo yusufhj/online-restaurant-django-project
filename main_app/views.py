@@ -125,7 +125,9 @@ def place_order(req):
     order.total = sum([item.price * session_cart[str(item.id)] for item in order.items.all()])
     order.save()
     
-    
+    restaurant = Restaurant.objects.get(id=item.restaurant.id)
+    restaurant.orders_history.add(order)
+        
     for item in session_cart:
         menu_order = MenuOrder()
         menu_order.order = order
@@ -144,7 +146,7 @@ def orders(req):
 @login_required
 def order_detail(req, pk):
     order = Order.objects.get(id=pk)
-    menu_order = MenuOrder.objects.filter(order__id = pk)
+    menu_order = MenuOrder.objects.filter(order__id = pk )
     item_quantities = {item.name: 0 for item in order.items.all()}
     
     # loop through all items, then loop through all related items in the order

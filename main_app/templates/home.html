@@ -9,16 +9,16 @@
     <div class="fixed-grid has-4-cols is-multiline">
         <div class="grid">
         {% for rest in restaurants %}
-        <a href="{% url 'detail' rest.id %}">
         <div class="cell">
+            <a href="{% url 'detail' rest.id %}">
             <div class="card">
-                <div class="card-image">
-                    <div style="width: 15rem">
-                        <figure class="image is-9y16">
+                <div style="height: 100% width: 100%" class="card-image">
+                    <div style="width: 100%">
+                        <figure style="height: 100% width: 100%" class="image 3by1">
                             {% if rest.image %}
-                                <img src="{{ rest.image.url }}" alt="{{ rest.name }}" style="width: 150px;">
+                                <img style="height: 100% width: 100%" src="{{ rest.image.url }}" alt="{{ rest.name }}" style="width: 150px;">
                             {% else %}
-                                <img src="https://via.placeholder.com/150" alt="{{ rest.name }}">
+                                <img style="height: 100% width: 100%" src="https://via.placeholder.com/150" alt="{{ rest.name }}">
                             {% endif %}
                         </figure>
                     </div>
@@ -42,8 +42,8 @@
                     </div>
                 </div>
             </div>
-        </div>
         </a>
+        </div>
         {% endfor %}
         </div>
     </div>

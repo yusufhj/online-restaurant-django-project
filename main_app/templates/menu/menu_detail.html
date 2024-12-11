@@ -10,10 +10,12 @@
         <img src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
     {% endif %} -->
     <h3>{{menu.name}}</h3>
-    <div>
-        <a href="{% url 'menu_update' restaurant.id menu.id %}">Edit</a>
-        <a href="{% url 'menu_delete' restaurant.id menu.id %}">Delete</a>
-    </div>
+    {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
+        <div>
+            <a href="{% url 'menu_update' restaurant.id menu.id %}">Edit</a>
+            <a href="{% url 'menu_delete' restaurant.id menu.id %}">Delete</a>
+        </div>
+    {% endif %}
     {% if menu.image %}
         <img src="{{ menu.image.url }}" alt="{{ menu.name }}" style="width: 150px;">
     {% else %}
@@ -28,12 +30,5 @@
         <button class="button is-primary">Add to Cart</button>
     </form>
 
-    {% comment %} 
-    <form action="{% url 'add_to_cart' %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="menu_id" value="{{menu.id}}">
-        <button type="submit">Add to cart</button>
-    </form> 
-    {% endcomment %}
 </section>
 {% endblock %}

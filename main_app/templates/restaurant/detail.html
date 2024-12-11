@@ -12,12 +12,18 @@
 
     <p>{{ restaurant.address }}</p>
     <p>{{ restaurant.get_categories_display }}</p>
+
+    {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
     <div>
         <a href="{% url 'restaurant_update' restaurant.id %}">Edit</a>
         <a href="{% url 'restaurant_delete' restaurant.id %}">Delete</a>
+        <a href="{% url 'all_orders' restaurant.id %}">orders</a>
     </div>
+    {% endif %}
     <h3>Menu</h3>
-    <a href="{% url 'menu_create' restaurant.id %}">Add Menu Item</a>
+    {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
+        <a href="{% url 'menu_create' restaurant.id %}">Add Menu Item</a>
+    {% endif %}
     <ul>
         {% for cat in restaurant.get_categories %}
             <h4>{{ cat }}</h4>

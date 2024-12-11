@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+<section class="container">
+    <h1 class="is-size-1">My Restaurants</h1>
+    <br>
+    <div class="fixed-grid has-4-cols is-multiline">
+        <div class="grid">
+    {% if restaurants %}
+        <a href="{% url 'restaurant_create' %}">Add Another Restaurant</a>
+        {% for restaurant in restaurants %}
+            <div class="cell">
+
+            <a href="{% url 'detail' restaurant.id %}">
+                <div class="card">
+                    <div style="height: 100% width: 100%" class="card-image">
+                        <div style="width: 100%">
+                            <figure style="height: 100% width: 100%" class="image 3by1">
+                                {% if restaurant.image %}
+                                    <img style="height: 100% width: 100%" src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" style="width: 150px;">
+                                {% else %}
+                                    <img style="height: 100% width: 100%" src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
+                                {% endif %}
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    {% if restaurant.image %}
+                                        <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" style="width: 150px;">
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
+                                    {% endif %}
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p>{{ restaurant.name }}</p>
+                                <p>{{ rerestaurantst.address }}</p>
+                                <p>{{ restaurant.get_categories_display }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You don't own any restaurants yet. <a href="{% url 'restaurant_create' %}">Add one now!</a></p>
+    {% endif %}
+    </div>
+
+{% endblock %}

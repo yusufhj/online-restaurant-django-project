@@ -40,6 +40,19 @@ def add_menu(req, restaurant_id):
     return render(req, 'menu/menu_form.html', {'restaurant': restaurant})
 
 @login_required
+@restaurant_owner_required
+def all_orders(req, restaurant_id):
+    orders = Restaurant.objects.get(id=restaurant_id).orders_history.all()
+    if req.user != Restaurant.objects.get(id=restaurant_id).user:
+        return redirect('/')
+    return render(req, 'order/index.html', {'orders': orders})
+
+@login_required
+def my_restaurants_view(request):
+    restaurants = Restaurant.objects.filter(user=request.user)
+    return render(request, 'restaurant/my_restaurants.html', {'restaurants': restaurants})
+
+@login_required
 def cart_index(req):
     session_cart = req.session.get('cart', {})
     print('---------------------------------', session_cart)

@@ -21,11 +21,13 @@
                 {% comment %} IF USER IS LOGGED IN {% endcomment %}
                 {% if user.is_authenticated %}
                 <!-- if user has restaurant show edit resraurant if not show add restaurant -->
-                {% if user.profile.role != 'Customer' %}
-                <a class="navbar-item" href="{% url 'restaurant_create' %}">
-                  Add Restaurant
-                </a>
-                {% endif %}
+                  {% if user.profile.role == 'RestaurantOwner' %}
+                    <a class="navbar-item" href="{% url 'restaurant_list' %}">
+                      My Restaurants
+                    </a>
+                  {% endif %}
+
+
                 <a class="navbar-item" href="{% url 'cart' %}">
                 Cart
                 </a>
@@ -39,6 +41,7 @@
                                 Orders
                             </a>
                           <hr class="navbar-divider">
+
                           <a class="navbar-item">
                             <form id="logout-form" method="post" action="{% url 'logout' %}">
                               {% csrf_token %}

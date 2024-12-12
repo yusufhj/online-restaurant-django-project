@@ -53,6 +53,7 @@
                 <h4>{{ cat }}</h4>
             </div>
             <div class="is-flex is-flex-direction-column">
+                {% if menus %}
                 {% for item in menus %}
                     {% if item.category.name == cat %}
                         <a class="mb-5" href="{% url 'menu_detail' restaurant.id item.id %}">
@@ -77,6 +78,9 @@
                         </a>
                     {% endif %}
                 {% endfor %}
+                {% else %}
+                <p class="subtitle">No menu items for this restaurant yet.</p>
+                {% endif %}
             </div>
             {% endfor %}
         </div>

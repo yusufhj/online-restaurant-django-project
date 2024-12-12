@@ -9,6 +9,18 @@
 The Restaurant Management System is a comprehensive web application designed to streamline restaurant operations and enhance the customer experience. This system enables restaurant administrators to efficiently manage menu menu, categorize them, and oversee user orders. Customers can browse the menu, add menu to their cart, place orders, and manage their profiles with ease.
 
 The application is built using Django, providing a robust and scalable framework for backend operations. It ensures an intuitive interface for both administrators and users, making restaurant management and ordering simple and user-friendly.
+
+## Screenshots
+### Home Page
+![Home Page](assets/screenshots/HomePage.png)
+### Menu Page
+![Menu Page](assets/screenshots/MenuPage.png)
+### Profile Page
+![Profile Page](assets/screenshots/ProfilePage.png)
+### Order History Page
+![Order History Page](assets/screenshots/OrderHistoryPage.png)
+
+
 ## ERD
 ![ERD](assets/ERD/Database%20ER%20diagram%20(crow's%20foot).png)
 
@@ -249,3 +261,8 @@ Function updateProfile(userId, updatedDetails):
 - [Bulma (CSS Framework)](https://bulma.io/)
 
 ## Future Work
+- Order tracking for users to view the status of their orders.
+- Implementing a rating system for menu items.
+- Integration of payment gateways for online payments.
+- Implementing a search feature for users to find menu items easily.
+- Adding a review system for users to provide feedback on their orders.

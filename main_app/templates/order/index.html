@@ -1,27 +1,30 @@
 {% extends "base.html" %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/restaurant/detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/order/index.css' %}">
 {% endblock head %}
 {% block content %}
 <section class="container">
-  <p class="title">Orders</p>
-{% if orders %}
-  <div class="is-flex is-flex-direction-column">
-    {% for order in orders %}
-    <div class="card mb-5">
-      <div class="dim-self" style="height:50px;">
-        <a class="is-flex is-flex-direction-row is-justify-content-space-around" href="{% url 'order_detail' order.id %}">
-        <p class="is-size-5 mt-2"><strong>{{ order.order_date }}</strong></p>
-        <p class="is-size-5 mt-2">Total: BHD {{ order.total }}</p>
-        <p class="is-size-5 mt-2">Status: {{ order.status }}</p>
-        </a>
-      </div>
-    </div>
-    {% endfor %}
+  <div class="title-container">
+      <p class="title has-text-centered">Orders</p>
   </div>
-{% else %}
-  <p class="title">No orders have been made yet.</p>
-{% endif %}
+  {% if orders %}
+  <div class="orders-container">
+      {% for order in orders %}
+      <div class="card mb-4">
+          <a href="{% url 'order_detail' order.id %}" class="order-card-link">
+              <div class="card-content is-flex is-align-items-center is-justify-content-space-between">
+                  <p class="is-size-5"><strong>{{ order.order_date }}</strong></p>
+                  <p class="is-size-5">Total: BHD {{ order.total }}</p>
+                  <p class="is-size-5">Status: {{ order.status }}</p>
+              </div>
+          </a>
+      </div>
+      {% endfor %}
+  </div>
+  {% else %}
+  <p class="title has-text-centered">No orders have been made yet.</p>
+  {% endif %}
 </section>
+
 {% endblock content %}

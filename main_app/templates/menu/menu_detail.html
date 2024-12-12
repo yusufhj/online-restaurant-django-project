@@ -1,49 +1,63 @@
 {% extends "base.html" %}
+{% load static %}
 {% block head %}
+<link rel="stylesheet" href="{% static 'css/menu/detail.css' %}">
 {% endblock head %}
 {% block content %}
 <section class="container">
     <div class="content">
-            <section class="hero is-success is-light">
-                <div class="hero-body is-flex">
-                    <div style="width:30%;" class="mr-5">
-                        <p class="title">{{ menu.name }}</p>
-                        <p class="subtitle">{{ restaurant.name }}</p>
-                    </div>
-                    <div style="width:50%;" class="ml-5">
-                        {% if menu.image %}
-                        <img src="{{ menu.image.url }}" alt="{{ menu.name }}" style="width: 250px;">
-                        {% else %}
-                        <img src="https://via.placeholder.com/150" alt="{{ menu.name }}" style="width: 250px;">
-                        {% endif %}
-                    </div>
-                    <div style="width:10%;" class="is-align-self-flex-end">
-                        <div class="is-flex is-justify-content-space-between is-flex-direction-column">
+        <section class="hero is-success is-light">
+            <div class="hero-body is-flex">
+                <!-- Left Section -->
+                <div style="width:30%;" class="mr-5">
+                    <p class="title">{{ menu.name }}</p>
+                    <p class="subtitle">{{ restaurant.name }}</p>
+                </div>
+                
+                <!-- Image Section -->
+                <div style="width:50%;" class="ml-5">
+                    {% if menu.image %}
+                    <img src="{{ menu.image.url }}" alt="{{ menu.name }}" style="width: 250px;">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" alt="{{ menu.name }}" style="width: 250px;">
+                    {% endif %}
+                </div>
+                
+                <!-- Right Section: Actions -->
+                <div style="width:10%;" class="is-align-self-flex-end">
+                    <div class="is-flex is-justify-content-space-between is-flex-direction-column">
+                        <!-- Add to Cart -->
+                        <div class="add-to-cart">
                             <form id="add-to-cart-form" method="post" action="{% url 'cart_add' menu.id %}">
                                 {% csrf_token %}
-                                <button class="button is-fullwidth is-link mb-5">Add to Cart</button>
+                                <button class="button is-fullwidth is-link mb-5" aria-label="Add {{ menu.name }} to cart">Add to Cart</button>
                             </form>
+                        </div>
+
+                        <!-- Menu Actions -->
+                        <div class="menu-actions">
                             {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
-                                    <a class="mb-5" href="{% url 'menu_update' restaurant.id menu.id %}"><button class="button is-warning is-light">Edit</button></a>
-                                    <a href="{% url 'menu_delete' restaurant.id menu.id %}"><button class="button is-warning is-light">Delete</button></a>
+                            <a class="mb-5" href="{% url 'menu_update' restaurant.id menu.id %}">
+                                <button class="button is-warning is-light" aria-label="Edit {{ menu.name }}">Edit</button>
+                            </a>
+                            <a href="{% url 'menu_delete' restaurant.id menu.id %}">
+                                <button class="button is-warning is-light" aria-label="Delete {{ menu.name }}">Delete</button>
+                            </a>
                             {% endif %}
                         </div>
                     </div>
                 </div>
-                <div class="ml-5 is-flex is-flex-direction-column">
-                    <p class="subtitle">Description: {{menu.description}}</p>
-                    <p class="subtitle">Category: {{menu.category.name}}</p>
-                    <p class="subtitle is-light mb-5">BHD {{menu.price}}</p>
-                </div>
-            </section>
+            </div>
 
+            <!-- Description Section -->
+            <div class="ml-5 is-flex is-flex-direction-column">
+                <p class="subtitle"><strong>Description:</strong> {{ menu.description }}</p>
+                <p class="subtitle"><strong>Category: </strong> {{ menu.category.name }}</p>
+                <p class="subtitle is-light mb-5">BHD {{ menu.price }}</p>
+            </div>
+        </section>
     </div>
-    <!-- {% if restaurant.image %}
-        <img src="{{ rest.image.url }}" alt="{{ restaurant.name }}" style="width: 150px;">
-    {% else %}
-        <img src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
-    {% endif %} -->
-    
-
 </section>
+
+
 {% endblock %}

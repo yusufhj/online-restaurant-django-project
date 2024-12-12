@@ -1,68 +1,82 @@
 {% extends "base.html" %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/cart/index.css' %}">
 {% endblock head %}
 {% block content %}
 <section class="container">
     <div class="title-container">
-        <h1 class="title text-center">My Cart</h1>
+        <h1 class="title has-text-centered">My Cart</h1>
     </div>
     {% if cart %}
-    <div class="cart-parent is-flex">
-        <div style="width: 60%" class="restaurant-grid">
-            {% for item in cart %}
-            <div class="restaurant-card">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image">
-                            {% if rest.image %}
-                                <img src="{{ rest.image.url }}" alt="{{ rest.name }} image">
+    <div class="cart-container box">
+        <table class="table is-fullwidth is-striped">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td class="is-vcentered">
+                        <figure class="cart-item-image">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.name }} image" class="cart-item-image">
                             {% else %}
-                                <img src="https://via.placeholder.com/150" alt="{{ rest.name }} placeholder image">
+                                <img src="https://via.placeholder.com/150" alt="{{ item.name }} placeholder image" class="cart-item-image">
                             {% endif %}
                         </figure>
-                    </div>
-                    <div class="card-content">
-                        <p class="title">{{ item.name }}</p>
-                        <p class="subtitle">BHD {{ item.total }}</p>
-                    </div>
-                    <footer class="card-footer">
-                        <a class="card-footer-item button is-primary" href={% url 'increment_cart_menu' item.id %}>+</a>
-                        <p class="card-footer-item">{{item.quantity}}</p>
-                        <a class="card-footer-item button is-primary" href={% url 'decrement_cart_item' item.id %}>-</a>
-                    </footer>
-                    <footer class="card-footer has-background-light">
-                        <form class="card-footer-item" id="remove-from-cart-form" method="post" action="{% url 'cart_remove' item.id %}">   
+                    </td>
+                    <td class="is-vcentered">{{ item.name }}</td>
+                    <td class="is-vcentered">BHD {{ item.price }}</td>
+                    <td class="is-vcentered">
+                        <div class="is-flex is-align-items-center">
+                            <a class="button is-small is-primary is-light ml-2" href="{% url 'decrement_cart_item' item.id %}">-</a>
+                            <span>{{ item.quantity }}</span>
+                            <a class="button is-small is-primary is-light mr-2" href="{% url 'increment_cart_menu' item.id %}">+</a>
+                        </div>
+                    </td>
+                    <td class="is-vcentered">BHD {{ item.total }}</td>
+                    <td class="is-vcentered">
+                        <form method="post" action="{% url 'cart_remove' item.id %}">
                             {% csrf_token %}
-                            <button class="button is-danger is-light">Remove</button>
+                            <button class="button is-danger is-small is-light">Remove</button>
                         </form>
-                    </footer>
-                </div>
-            </div>
-            {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="summary-box box mt-5">
+        <p class="is-size-5 has-text-weight-bold">Summary:</p>
+        <div class="is-flex is-justify-content-space-between">
+            <p>Order Items:</p>
+            <p>BHD {{ total_price }}</p>
         </div>
-        <div style="width: 40%; height: 250px" class="box content ml-5 p-5">
-            <p class="is-size-5">Summary:</p>
-            <div class="is-flex is-justify-content-space-between">
-                <p class="is-size-6">Order Items:</p>
-                <p class="is-size-6">BHD {{ total_price }}</p>
-            </div>
-            <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-6">Delivery Charges:</p>
-            <p class="is-size-6">Free</p>
-            </div>
-            <div class="is-flex is-justify-content-space-between">
-                <p class="is-size-6">Total:</p>
-                <h6 class="is-size-6">BHD {{ total_price }}</h6>
-            </div>
-            <a href="{% url 'place_order' %}"><button class="button is-fullwidth is-primary">
+        <div class="is-flex is-justify-content-space-between">
+            <p>Delivery Charges:</p>
+            <p>Free</p>
+        </div>
+        <div class="is-flex is-justify-content-space-between">
+            <p>Total:</p>
+            <h6 class="has-text-weight-bold">BHD {{ total_price }}</h6>
+        </div>
+        <a href="{% url 'place_order' %}">
+            <button class="button is-fullwidth is-primary mt-3">
                 Place Order
-            </button></a>
-        </div>
+            </button>
+        </a>
     </div>
     {% else %}
-    <p class="title">Cart is empty</p>
+    <p class="title has-text-centered">Your cart is empty.</p>
     {% endif %}
 </section>
+
 {% endblock %}

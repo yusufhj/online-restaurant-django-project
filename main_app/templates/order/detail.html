@@ -1,44 +1,48 @@
 {% extends "base.html" %}
+{% load register_filter %}
+{% load static %}
 {% block head %}
+<link rel="stylesheet" href="{% static 'css/order/detail.css' %}">
 {% endblock head %}
 {% block content %}
 <section class="container">
-    <div class="is-flex is-justify-content-space-between is-align-items-center">
+    <!-- Header Section -->
+    <div class="header-container is-flex is-justify-content-space-between is-align-items-center mb-5">
         <h2 class="title">Order Detail</h2>
-        <a href="{% url 'order_list' %}"><button class="button is-link is-light">Back to Orders</button></a>
+        <a href="{% url 'order_list' %}">
+            <button class="button is-link is-light">Back to Orders</button>
+        </a>
     </div>
-    <div class="box has-background-primary-light">
+
+    <!-- Order Summary -->
+    <div class="box has-background-primary-light mb-5">
         <div class="is-flex is-justify-content-space-around is-align-items-baseline">
-            <p class="subtitle">Order Date: {{ order.order_date }}</p>
-            <p class="subtitle">Order Status: {{ order.status }}</p>
-            <p class="subtitle"><strong>Order Total: BHD {{ order.total }}</strong></p>
+            <p class="subtitle"><strong>Order Date:</strong> {{ order.order_date }}</p>
+            <p class="subtitle"><strong>Status:</strong> {{ order.status }}</p>
+            <p class="subtitle"><strong>Total:</strong> BHD {{ order.total }}</p>
         </div>
     </div>
-    <p class="title has-text-centered">
-        Items Ordered
-    </p>
-    {% load register_filter %}
-    <div class="fixed-grid has-1-cols">
-    {% for item in order.items.all %}
-    <div class="cell mb-5">
-        <div class="card">
-            <div class="card-content is-flex is-justify-content-space-between is-align-items-center">
-                <p class="title">
-                    {{ item.name }}
-                </p>
-                <p class="subtitle">
-                    {{ item.name }} x {{ item_quantities|hash:item.name }}  - BHD {{ item.price }}
-                </p>
-                {% if item.image %}
-                <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 150px;">
-                {% else %}
-                <img src="https://via.placeholder.com/150" alt="{{ item.name }}">
-                {% endif %}
+
+    <!-- Items Ordered Section -->
+    <p class="title">Items Ordered</p>
+    <div class="is-flex is-flex-direction-column">
+        {% for item in order.items.all %}
+        <div class="card mb-5">
+            <div class="dim-self" style="height:50px;">
+                <div class="is-flex is-flex-direction-row is-justify-content-space-around">
+                    <p class="is-size-5 mt-2"><strong>{{ item.name }}</strong></p>
+                    <p class="is-size-5 mt-2">{{ item_quantities|hash:item.name }} x BHD {{ item.price }}</p>
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                    {% else %}
+                    <img src="https://via.placeholder.com/50" alt="{{ item.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                    {% endif %}
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-    </div>
-    <a href="{% url 'order_list' %}"><button class="button is-link is-light">Back to Orders</button></a>
 </section>
+
+
 {% endblock content %}

@@ -1,0 +1,56 @@
+/* General Container Styling */
+.container {
+    margin: 20px auto;
+    padding: 10px;
+}
+
+/* Title Styling */
+.title-container .title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+.table {
+    margin-top: 20px;
+}
+
+.table td, .table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Image Styling */
+.cart-item-image {
+    width: 100px;
+    display: inline-block;
+    object-fit: cover;
+}
+
+/* Summary Box */
+.summary-box {
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.summary-box p {
+    margin: 5px 0;
+}
+
+.summary-box h6 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table td, .table th {
+        font-size: 0.9rem;
+    }
+
+    .cart-item-image {
+        width: 80px;
+    }
+}

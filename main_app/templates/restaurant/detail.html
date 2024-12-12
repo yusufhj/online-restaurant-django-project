@@ -28,10 +28,10 @@
             </div>
             
             {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
-            <div class="restaurant-actions card-footer has-text-centered">
+            <div class="restaurant-actions has-text-centered">
+                <a class="card-footer-item" href="{% url 'all_orders' restaurant.id %}">Orders</a>
                 <a class="card-footer-item" href="{% url 'restaurant_update' restaurant.id %}">Edit</a>
                 <a class="card-footer-item" href="{% url 'restaurant_delete' restaurant.id %}">Delete</a>
-                <a class="card-footer-item" href="{% url 'all_orders' restaurant.id %}">Orders</a>
             </div>
             {% endif %}
         </div>

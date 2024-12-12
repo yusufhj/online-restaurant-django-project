@@ -1,17 +1,27 @@
 {% extends "base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/restaurant/detail.css' %}">
+{% endblock head %}
 {% block content %}
-<h1>Orders</h1>
+<section class="container">
+  <p class="title">Orders</p>
 {% if orders %}
-  <ul>
+  <div class="is-flex is-flex-direction-column">
     {% for order in orders %}
-      <li>
-        <a href="{% url 'order_detail' order.id %}">
-            {{ order.order_date }} - Total: ${{ order.total }} - Status: {{ order.status }}
+    <div class="card mb-5">
+      <div class="dim-self" style="height:50px;">
+        <a class="is-flex is-flex-direction-row is-justify-content-space-around" href="{% url 'order_detail' order.id %}">
+        <p class="is-size-5 mt-2"><strong>{{ order.order_date }}</strong></p>
+        <p class="is-size-5 mt-2">Total: BHD {{ order.total }}</p>
+        <p class="is-size-5 mt-2">Status: {{ order.status }}</p>
         </a>
-      </li>
+      </div>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
 {% else %}
-  <p>No orders have been made yet.</p>
+  <p class="title">No orders have been made yet.</p>
 {% endif %}
+</section>
 {% endblock content %}

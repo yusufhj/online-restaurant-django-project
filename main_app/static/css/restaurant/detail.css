@@ -188,6 +188,10 @@
     border-radius: 8px;
 }
 
+.dim-self:hover {
+    filter: brightness(50%);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .restaurant-header {

@@ -12,13 +12,13 @@ The application is built using Django, providing a robust and scalable framework
 
 ## Screenshots
 ### Home Page
-![Home Page](assets/screenshots/HomePage.png)
+![Home Page](assets/screenshots/home.png)
 ### Menu Page
-![Menu Page](assets/screenshots/MenuPage.png)
+![Menu Detail](assets/screenshots/menu_details.png)
 ### Profile Page
-![Profile Page](assets/screenshots/ProfilePage.png)
+![Cart Page](assets/screenshots/cart_page.png)
 ### Order History Page
-![Order History Page](assets/screenshots/OrderHistoryPage.png)
+![Restaurant Form](assets/screenshots/restaurant_form.png)
 
 
 ## ERD

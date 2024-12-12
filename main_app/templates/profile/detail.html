@@ -4,27 +4,25 @@
 <!-- <link rel="stylesheet" href="{% static 'css/form.css' %}" /> -->
 {% endblock %} 
 {% block content %}
-<div class="page-header">
-</div>
-{% if error_message %}
-  <p class="red-text">{{ error_message }}</p>
-{% endif %}
-<section>
-  <h3>Profile</h3>
-  <p>Username: {{ user.username }}</p>
-  <p>Email: {{ user.email }}</p>
-  
-  <h3>Address</h3>
-  {% if user.profile.address == "" %}
-  <a href="{% url 'profile_update' %}">
-    <p>Enter your address to finish setting up your account</p>
-  </a>
-  {% else %}
-    <p>Your address is: {{ user.profile.address }}</p>
-    <p>You can update your address <a href="{% url 'profile_update' %}">here.</a></p>
+<section class="container">
+  {% if error_message %}
+    <p class="red-text">{{ error_message }}</p>
   {% endif %}
-
-
+  <h2 class="title">Your Profile</h2>
+  <div class="box has-background-success-light">
+      <div class="is-flex is-flex-direction-column is-justify-content-space-around is-align-items-baseline">
+          <p class="subtitle">Username: {{ user.username }}</p>
+          <p class="subtitle">Email: {{ user.email }}</p>
+          {% if user.profile.address == "" %}
+          <a href="{% url 'profile_update' %}">
+            <p class="subtitle">Enter your address to finish setting up your account</p>
+          </a>
+          {% else %}
+            <p class="subtitle">Your delivery address is: <strong>{{ user.profile.address }}</strong></p>
+            <p class="is-size-6">You can update your address <a href="{% url 'profile_update' %}"><strong>here.</strong></a></p>
+          {% endif %}
+      </div>
+  </div>
 </section>
 
 {% endblock %}

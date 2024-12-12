@@ -2,25 +2,43 @@
 {% block head %}
 {% endblock head %}
 {% block content %}
-<section>
-    <!--     
-    status = models.CharField(max_length=1, choices=STATUS, default='P')
-    total = models.DecimalField(max_digits=7, decimal_places=3, default=0.000)
-    items = models.ManyToManyField('Menu', blank=True, default=None)
-    order_date = models.DateTimeField(auto_now_add=True)
-     -->
-    <h2>Order Detail</h2>
-    <p>Order ID: {{ order.id }}</p>
-    <p>Order Date: {{ order.order_date }}</p>
-    <p>Order Status: {{ order.status }}</p>
-    <p>Order Total: ${{ order.total }}</p>
-    <p>Order Items:</p>
-    <ul>
-        {% load register_filter %}
-        {% for item in order.items.all %}
-            <li>{{ item.name }} x {{ item_quantities|hash:item.name }}  - ${{ item.price }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'order_list' %}">Back to Orders</a>
+<section class="container">
+    <div class="is-flex is-justify-content-space-between is-align-items-center">
+        <h2 class="title">Order Detail</h2>
+        <a href="{% url 'order_list' %}"><button class="button is-link is-light">Back to Orders</button></a>
+    </div>
+    <div class="box has-background-primary-light">
+        <div class="is-flex is-justify-content-space-around is-align-items-baseline">
+            <p class="subtitle">Order Date: {{ order.order_date }}</p>
+            <p class="subtitle">Order Status: {{ order.status }}</p>
+            <p class="subtitle"><strong>Order Total: BHD {{ order.total }}</strong></p>
+        </div>
+    </div>
+    <p class="title has-text-centered">
+        Items Ordered
+    </p>
+    {% load register_filter %}
+    <div class="fixed-grid has-1-cols">
+    {% for item in order.items.all %}
+    <div class="cell mb-5">
+        <div class="card">
+            <div class="card-content is-flex is-justify-content-space-between is-align-items-center">
+                <p class="title">
+                    {{ item.name }}
+                </p>
+                <p class="subtitle">
+                    {{ item.name }} x {{ item_quantities|hash:item.name }}  - BHD {{ item.price }}
+                </p>
+                {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 150px;">
+                {% else %}
+                <img src="https://via.placeholder.com/150" alt="{{ item.name }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    <a href="{% url 'order_list' %}"><button class="button is-link is-light">Back to Orders</button></a>
 </section>
 {% endblock content %}

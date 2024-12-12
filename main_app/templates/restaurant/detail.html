@@ -7,32 +7,34 @@
 
 {% block content %}
 <section class="restaurant-page">
-    <div class="restaurant-header">
-        <div class="restaurant-title">
-            <h2>{{ restaurant.name }}</h2>
-        </div>
-        
-        <div class="restraurant-details">
-            <div class="restaurant-image">
-                {% if restaurant.image %}
-                <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" style="width: 150px;">
-                {% else %}
-                <img src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
-                {% endif %}
+    <div class="card">
+        <div class="restaurant-header">
+            <div class="restaurant-title has-text-centered">
+                <h2>{{ restaurant.name }}</h2>
             </div>
-            <div class="restaurant-description">
-                <p>{{ restaurant.address }}</p>
-                <p>{{ restaurant.get_categories_display }}</p>
+            
+            <div class="restraurant-details">
+                <div class="restaurant-image">
+                    {% if restaurant.image %}
+                    <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" style="width: 150px;">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
+                    {% endif %}
+                </div>
+                <div class="restaurant-description">
+                    <p><strong>Address:</strong> {{ restaurant.address }}</p>
+                    <p><strong>Categories:</strong> {{ restaurant.get_categories_display }}</p>
+                </div>
             </div>
+            
+            {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
+            <div class="restaurant-actions card-footer has-text-centered">
+                <a class="card-footer-item" href="{% url 'restaurant_update' restaurant.id %}">Edit</a>
+                <a class="card-footer-item" href="{% url 'restaurant_delete' restaurant.id %}">Delete</a>
+                <a class="card-footer-item" href="{% url 'all_orders' restaurant.id %}">Orders</a>
+            </div>
+            {% endif %}
         </div>
-        
-        {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
-        <div class="restaurant-actions">
-            <a href="{% url 'restaurant_update' restaurant.id %}">Edit</a>
-            <a href="{% url 'restaurant_delete' restaurant.id %}">Delete</a>
-            <a href="{% url 'all_orders' restaurant.id %}">Orders</a>
-        </div>
-        {% endif %}
     </div>
 
     <div class="restaurant-menu">
@@ -41,7 +43,7 @@
         </div>
         <div class="menu-actions">
             {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
-                <a href="{% url 'menu_create' restaurant.id %}">Add Menu Item</a>
+                <a href="{% url 'menu_create' restaurant.id %}"><button class="button is-primary mb-5">Add Menu Item</button></a>
             {% endif %}
         </div>
         <div class="menu-list">
@@ -50,31 +52,35 @@
             <div class="menu-category">
                 <h4>{{ cat }}</h4>
             </div>
-            <div class="menu-items">
+            <div class="is-flex is-flex-direction-column">
+                {% if menus %}
                 {% for item in menus %}
                     {% if item.category.name == cat %}
-                    <div class="menu-item">
-                        <a href="{% url 'menu_detail' restaurant.id item.id %}">
-                            <div class="item-name">
-                                <h5>{{ item.name }}</h5>
-                            </div>
-                            <div class="item-description">
-                                <p>{{ item.description }}</p>
-                            </div>
-                            <div class="item-image">
-                                {% if item.image %}
-                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 150px;">
-                                {% else %}
-                                    <img src="https://via.placeholder.com/150" alt="{{ item.name }}">
-                                {% endif %}
-                            </div>
-                            <div class="item-price">
-                                <p>BHD {{ item.price }}</p>
+                        <a class="mb-5" href="{% url 'menu_detail' restaurant.id item.id %}">
+                            <div class="card is-flex is-justify-content-space-between">
+                                <div class="item-image pl-5">
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 150px;">
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/150" alt="{{ item.name }}">
+                                    {% endif %}
+                                </div>
+                                <div class="item-name is-align-self-center">
+                                    <h5>{{ item.name }}</h5>
+                                </div>
+                                <div class="item-description is-align-self-center">
+                                    <p>{{ item.description }}</p>
+                                </div>
+                                <div class="item-price is-align-self-center pr-5">
+                                    <p>BHD {{ item.price }}</p>
+                                </div>
                             </div>
                         </a>
-                    </div>
                     {% endif %}
                 {% endfor %}
+                {% else %}
+                <p class="subtitle">No menu items for this restaurant yet.</p>
+                {% endif %}
             </div>
             {% endfor %}
         </div>

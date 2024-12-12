@@ -2,33 +2,48 @@
 {% block head %}
 {% endblock head %}
 {% block content %}
-<section>
-    <h2>{{ restaurant.name }}</h2>
+<section class="container">
+    <div class="content">
+            <section class="hero is-success is-light">
+                <div class="hero-body is-flex">
+                    <div style="width:30%;" class="mr-5">
+                        <p class="title">{{ menu.name }}</p>
+                        <p class="subtitle">{{ restaurant.name }}</p>
+                    </div>
+                    <div style="width:50%;" class="ml-5">
+                        {% if menu.image %}
+                        <img src="{{ menu.image.url }}" alt="{{ menu.name }}" style="width: 250px;">
+                        {% else %}
+                        <img src="https://via.placeholder.com/150" alt="{{ menu.name }}" style="width: 250px;">
+                        {% endif %}
+                    </div>
+                    <div style="width:10%;" class="is-align-self-flex-end">
+                        <div class="is-flex is-justify-content-space-between is-flex-direction-column">
+                            <form id="add-to-cart-form" method="post" action="{% url 'cart_add' menu.id %}">
+                                {% csrf_token %}
+                                <button class="button is-fullwidth is-link mb-5">Add to Cart</button>
+                            </form>
+                            {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
+                                    <a class="mb-5" href="{% url 'menu_update' restaurant.id menu.id %}"><button class="button is-warning is-light">Edit</button></a>
+                                    <a href="{% url 'menu_delete' restaurant.id menu.id %}"><button class="button is-warning is-light">Delete</button></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="ml-5 is-flex is-flex-direction-column">
+                    <p class="subtitle">Description: {{menu.description}}</p>
+                    <p class="subtitle">Category: {{menu.category.name}}</p>
+                    <p class="subtitle is-light mb-5">BHD {{menu.price}}</p>
+                </div>
+            </section>
+
+    </div>
     <!-- {% if restaurant.image %}
         <img src="{{ rest.image.url }}" alt="{{ restaurant.name }}" style="width: 150px;">
     {% else %}
         <img src="https://via.placeholder.com/150" alt="{{ restaurant.name }}">
     {% endif %} -->
-    <h3>{{menu.name}}</h3>
-    {% if user.profile.role == 'RestaurantOwner' and restaurant.user == user %}
-        <div>
-            <a href="{% url 'menu_update' restaurant.id menu.id %}">Edit</a>
-            <a href="{% url 'menu_delete' restaurant.id menu.id %}">Delete</a>
-        </div>
-    {% endif %}
-    {% if menu.image %}
-        <img src="{{ menu.image.url }}" alt="{{ menu.name }}" style="width: 150px;">
-    {% else %}
-        <img src="https://via.placeholder.com/150" alt="{{ menu.name }}">
-    {% endif %}
     
-    <p>{{menu.description}}</p>
-    <p>{{menu.category.name}}</p>
-    <p>${{menu.price}}</p>
-    <form id="add-to-cart-form" method="post" action="{% url 'cart_add' menu.id %}">
-        {% csrf_token %}
-        <button class="button is-primary">Add to Cart</button>
-    </form>
 
 </section>
 {% endblock %}

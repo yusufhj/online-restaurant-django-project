@@ -60,6 +60,7 @@ def cart_index(req):
     session_cart = req.session.get('cart', {})
     print('---------------------------------', session_cart)
     cart = []
+    total_price = 0
     # get all items with the stored id
     for cart_item_id in session_cart:
         item = Menu.objects.get(id=cart_item_id)
@@ -68,9 +69,11 @@ def cart_index(req):
         item.total = item.price * item.quantity
         
         cart.append(item)
+        
+        total_price = total_price + item.total
     
     return render(req, 'cart/index.html', 
-                  {'cart': cart}
+                  {'cart': cart, 'total_price': total_price}
                   )
 
 @login_required
